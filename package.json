@@ -1,6 +1,6 @@
 {
   "name": "@niknak/server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "@atproto/xrpc-server": "^0.7.6",
     "@niknak/lexicon": "^0.0.4"
