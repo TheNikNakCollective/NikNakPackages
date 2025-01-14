@@ -1,0 +1,67 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.yarn/**'
+      - 'servers/**'
+      - 'src/**'
+      - '.yarnrc.yml'
+      - 'package.json'
+      - '.github/workflows/publish.yaml'
+
+jobs:
+  build:
+    name: Build, push, and deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout main
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'yarn'
+
+    - name: Git Identity
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install Packages
+      run:  yarn install
+
+    - name: Build Packages
+      run:  yarn nx run @niknak/server:build
+    
+    - name: Check Types
+      run:  yarn nx run @niknak/server:check-types
+
+    - name: Set NPM Config
+      run:  npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+    - name: Version Package
+      run:  |
+        git status
+        git fetch --all --tags
+        git pull --rebase
+        yarn nx run @niknak/server:version
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to NPM
+      run:  yarn nx run @niknak/server:release
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

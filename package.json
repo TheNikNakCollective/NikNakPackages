@@ -1,0 +1,25 @@
+{
+  "name": "@niknak/server",
+  "version": "0.0.0",
+  "dependencies": {
+    "@atproto/xrpc-server": "^0.7.6",
+    "@niknak/lexicon": "^0.0.4"
+  },
+  "devDependencies": {
+    "lerna": "^8.1.9",
+    "nx": "^20.3.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -P tsconfig.json",
+    "check-types": "tsc -P tsconfig.json --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "packageManager": "yarn@4.6.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}
