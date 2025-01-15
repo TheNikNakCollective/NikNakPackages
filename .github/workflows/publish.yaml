@@ -6,8 +6,8 @@ on:
       - main
     paths:
       - '.yarn/**'
+      - 'packages/**'
       - 'servers/**'
-      - 'src/**'
       - '.yarnrc.yml'
       - 'package.json'
       - '.github/workflows/publish.yaml'

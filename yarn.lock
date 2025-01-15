@@ -576,9 +576,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@niknak/server@workspace:.":
+"@niknak/node@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@niknak/server@workspace:."
+  resolution: "@niknak/node@workspace:."
+  dependencies:
+    "@atproto/identity": "npm:^0.4.5"
+    "@atproto/oauth-client-node": "npm:^0.2.7"
+    "@atproto/sync": "npm:^0.1.9"
+    "@atproto/xrpc-server": "npm:^0.7.6"
+    "@niknak/lexicon": "npm:^0.0.6"
+    "@types/cors": "npm:^2"
+    "@types/express": "npm:^4"
+    "@types/ws": "npm:^8"
+    cors: "npm:^2.8.5"
+    dotenv: "npm:^16.4.7"
+    envalid: "npm:^8.0.0"
+    express: "npm:^4.21.2"
+    lerna: "npm:^8.1.9"
+    nx: "npm:^20.3.1"
+    pino: "npm:^9.6.0"
+    prettier: "npm:^3.4.2"
+    typescript: "npm:^5.7.3"
+    ws: "npm:^8.18.0"
+  languageName: unknown
+  linkType: soft
+
+"@niknak/pds@workspace:packages/pds":
+  version: 0.0.0-use.local
+  resolution: "@niknak/pds@workspace:packages/pds"
   dependencies:
     "@atproto/identity": "npm:^0.4.5"
     "@atproto/oauth-client-node": "npm:^0.2.7"
