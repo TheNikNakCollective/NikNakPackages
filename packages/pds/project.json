@@ -10,7 +10,10 @@
                 "script": "build"
             },
             "outputs": ["{projectRoot}/dist"],
-            "cache": true
+            "cache": true,
+            "dependsOn": [
+              { "projects": ["@niknak/lexicon"], "target": "build" }
+            ]
         },
         "lex": {
             "executor": "nx:run-script",
