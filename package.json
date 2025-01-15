@@ -1,6 +1,6 @@
 {
-    "name": "@niknak/node",
-    "version": "0.0.3",
+    "name": "@niknak/monorepo",
+    "version": "0.0.6",
     "workspaces": [
         "packages/*"
     ],

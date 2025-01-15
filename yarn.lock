@@ -190,6 +190,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atproto/lex-cli@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@atproto/lex-cli@npm:0.5.5"
+  dependencies:
+    "@atproto/lexicon": "npm:^0.4.5"
+    "@atproto/syntax": "npm:^0.3.1"
+    chalk: "npm:^4.1.2"
+    commander: "npm:^9.4.0"
+    prettier: "npm:^3.2.5"
+    ts-morph: "npm:^16.0.0"
+    yesno: "npm:^0.4.0"
+    zod: "npm:^3.23.8"
+  bin:
+    lex: dist/index.js
+  checksum: 10c0/f8580c584236a9d5183d022d7d290cb359d01effa3baf28f3f7d95735feae573fd464c2c27326c2dffbef16d5a7323fa11794dc0d4f6831623f1a7a4d84dad45
+  languageName: node
+  linkType: hard
+
 "@atproto/lexicon@npm:^0.4.5":
   version: 0.4.5
   resolution: "@atproto/lexicon@npm:0.4.5"
@@ -576,9 +594,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@niknak/node@workspace:.":
+"@niknak/lexicon@workspace:packages/lexicon":
   version: 0.0.0-use.local
-  resolution: "@niknak/node@workspace:."
+  resolution: "@niknak/lexicon@workspace:packages/lexicon"
+  dependencies:
+    "@atproto/lex-cli": "npm:^0.5.5"
+    "@atproto/lexicon": "npm:^0.4.5"
+    "@atproto/xrpc-server": "npm:^0.7.6"
+    lerna: "npm:^8.1.9"
+    nx: "npm:^20.3.1"
+    prettier: "npm:^3.4.2"
+    typescript: "npm:^5.7.3"
+  languageName: unknown
+  linkType: soft
+
+"@niknak/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@niknak/monorepo@workspace:."
   dependencies:
     lerna: "npm:^8.1.9"
     nx: "npm:^20.3.1"
@@ -1190,6 +1222,18 @@ __metadata:
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
   checksum: 10c0/ef6351ae073c45c2ac89494dbb3e1f87cc60a93ce4cde797b782812b6f97da0d620ae81973f104b43c9b7eaa789ad20ba4f6a1359f1cc62f63729a55a7d22d4e
+  languageName: node
+  linkType: hard
+
+"@ts-morph/common@npm:~0.17.0":
+  version: 0.17.0
+  resolution: "@ts-morph/common@npm:0.17.0"
+  dependencies:
+    fast-glob: "npm:^3.2.11"
+    minimatch: "npm:^5.1.0"
+    mkdirp: "npm:^1.0.4"
+    path-browserify: "npm:^1.0.1"
+  checksum: 10c0/91b5f68b92d4e92376cd937e9a47b2bfce72d929bd2b15dbde4e3d3c7a81bfaeebfb11fe10477af5c8262f5a53deb3c1ee2bbc0b36a808dc04901c05330ef153
   languageName: node
   linkType: hard
 
@@ -1879,7 +1923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1":
+"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -2008,6 +2052,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"code-block-writer@npm:^11.0.3":
+  version: 11.0.3
+  resolution: "code-block-writer@npm:11.0.3"
+  checksum: 10c0/12fe4c02152a2b607e8913b39dcc31dcb5240f7c8933a3335d4e42a5418af409bf7ed454c80d6d8c12f9c59bb685dd88f9467874b46be62236dfbed446d03fd6
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -2049,6 +2100,13 @@ __metadata:
   dependencies:
     delayed-stream: "npm:~1.0.0"
   checksum: 10c0/0dbb829577e1b1e839fa82b40c07ffaf7de8a09b935cadd355a73652ae70a88b4320db322f6634a4ad93424292fa80973ac6480986247f1734a1137debf271d5
+  languageName: node
+  linkType: hard
+
+"commander@npm:^9.4.0":
+  version: 9.5.0
+  resolution: "commander@npm:9.5.0"
+  checksum: 10c0/5f7784fbda2aaec39e89eb46f06a999e00224b3763dc65976e05929ec486e174fe9aac2655f03ba6a5e83875bd173be5283dc19309b7c65954701c02025b3c1d
   languageName: node
   linkType: hard
 
@@ -2730,7 +2788,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
   version: 3.3.3
   resolution: "fast-glob@npm:3.3.3"
   dependencies:
@@ -4232,7 +4290,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1":
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
   version: 5.1.6
   resolution: "minimatch@npm:5.1.6"
   dependencies:
@@ -4393,7 +4451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:^1.0.3":
+"mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
   bin:
@@ -5140,6 +5198,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"path-browserify@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "path-browserify@npm:1.0.1"
+  checksum: 10c0/8b8c3fd5c66bd340272180590ae4ff139769e9ab79522e2eb82e3d571a89b8117c04147f65ad066dccfb42fcad902e5b7d794b3d35e0fd840491a8ddbedf8c66
+  languageName: node
+  linkType: hard
+
 "path-exists@npm:^3.0.0":
   version: 3.0.0
   resolution: "path-exists@npm:3.0.0"
@@ -5337,7 +5402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.4.2":
+"prettier@npm:^3.2.5, prettier@npm:^3.4.2":
   version: 3.4.2
   resolution: "prettier@npm:3.4.2"
   bin:
@@ -6430,6 +6495,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-morph@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "ts-morph@npm:16.0.0"
+  dependencies:
+    "@ts-morph/common": "npm:~0.17.0"
+    code-block-writer: "npm:^11.0.3"
+  checksum: 10c0/8ab316db96ec9254daf1f7193e225393c4a48b814f2d0191cde9da5b380a5a8d8eb3f75fb82b841335d06dd6e9c477daf0b8986e5b5b5e172064065b0c2b7408
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^4.1.2":
   version: 4.2.0
   resolution: "tsconfig-paths@npm:4.2.0"
@@ -6949,6 +7024,13 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^20.2.2"
   checksum: 10c0/b1dbfefa679848442454b60053a6c95d62f2d2e21dd28def92b647587f415969173c6e99a0f3bab4f1b67ee8283bf735ebe3544013f09491186ba9e8a9a2b651
+  languageName: node
+  linkType: hard
+
+"yesno@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "yesno@npm:0.4.0"
+  checksum: 10c0/fd193d926747ff584359badec38fc7221835427e2292826d7864f34fb4aa56af49c7d0490a39ba00c1af067ba11be27e19d5ff55b30eb4b4a2508d8dee2afa46
   languageName: node
   linkType: hard
 

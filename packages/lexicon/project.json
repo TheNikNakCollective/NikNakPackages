@@ -1,0 +1,25 @@
+{
+  "name": "@niknak/lexicon",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lexicon/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "build"
+      },
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    },
+    "lex": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "lex"
+      },
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    }
+  },
+  "tags": []
+}

@@ -7,7 +7,7 @@
             "options": {
                 "commands": [
                     {
-                        "command": "nx run-many --target=build --projects=@niknak/pds",
+                        "command": "nx run-many --target=build --projects=@niknak/pds,@niknak/lexicon",
                         "forwardAllArgs": false
                     }
                 ],
@@ -19,7 +19,7 @@
             "options": {
                 "commands": [
                     {
-                        "command": "nx run-many --target=check-types --projects=@niknak/pds",
+                        "command": "nx run-many --target=check-types --projects=@niknak/pds,@niknak/lexicon",
                         "forwardAllArgs": false
                     }
                 ],
