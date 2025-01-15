@@ -1,6 +1,6 @@
 {
   "name": "@niknak/server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "@atproto/identity": "^0.4.5",
     "@atproto/oauth-client-node": "^0.2.7",
