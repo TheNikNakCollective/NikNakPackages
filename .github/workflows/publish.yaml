@@ -40,10 +40,10 @@ jobs:
       run:  yarn install
 
     - name: Build Packages
-      run:  yarn nx run @niknak/server:build
+      run:  yarn nx run workspace:packages:build
     
     - name: Check Types
-      run:  yarn nx run @niknak/server:check-types
+      run:  yarn nx run workspace:packages:check-types
 
     - name: Set NPM Config
       run:  npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
@@ -55,13 +55,13 @@ jobs:
         git status
         git fetch --all --tags
         git pull --rebase
-        yarn nx run @niknak/server:version
+        yarn nx run workspace:version
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish to NPM
-      run:  yarn nx run @niknak/server:release
+      run:  yarn nx run workspace:release
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

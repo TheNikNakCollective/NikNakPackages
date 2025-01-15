@@ -1,9 +1,6 @@
 {
-  "name": "@niknak/node",
-  "version": "0.0.2",
-  "workspaces": [
-    "packages/*"
-  ],
+  "name": "@niknak/pds",
+  "version": "0.0.1",
   "dependencies": {
     "@atproto/identity": "^0.4.5",
     "@atproto/oauth-client-node": "^0.2.7",
@@ -33,5 +30,7 @@
   "files": [
     "dist"
   ],
-  "packageManager": "yarn@4.6.0"
+  "publishConfig": {
+    "access": "public"
+  }
 }
