@@ -38,6 +38,9 @@ jobs:
             - name: Install Packages
               run: yarn install
 
+            - name: Check Formatting
+              run: yarn format:check
+
             - name: Build Packages
               run: yarn nx run workspace:packages:build
 
