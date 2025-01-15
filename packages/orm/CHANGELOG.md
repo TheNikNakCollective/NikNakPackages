@@ -5,8 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.0.8](https://github.com/TheNikNakCollective/NikNakPackages/compare/v0.0.7...v0.0.8) (2025-01-15)
 
-**Note:** Version bump only for package @niknak/lexicon
-
-## [0.0.7](https://github.com/TheNikNakCollective/NikNakServer/compare/v0.0.4...v0.0.7) (2025-01-15)
-
-**Note:** Version bump only for package @niknak/lexicon
+**Note:** Version bump only for package @niknak/orm
