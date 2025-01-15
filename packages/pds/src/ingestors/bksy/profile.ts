@@ -1,7 +1,7 @@
 import pino from 'pino'
 import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
-import * as Profile from '@niknak/lexicon/dist/lexicon/types/app/bsky/actor/profile'
+import * as Profile from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { Database } from '@app/database'
 import { Ingestor } from '../ingestor'
 

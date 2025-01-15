@@ -584,17 +584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@niknak/lexicon@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "@niknak/lexicon@npm:0.0.6"
-  dependencies:
-    "@atproto/lexicon": "npm:^0.4.5"
-    "@atproto/xrpc-server": "npm:^0.7.6"
-  checksum: 10c0/467d5f456e1f88bf8464d0377f25908ae09ed6355cccfad2ccf6b36362e7f02c1c966fe222a3b424e1395a8c65746cc5d2aac8ea124eb87961ffbdb911e3caab
-  languageName: node
-  linkType: hard
-
-"@niknak/lexicon@workspace:packages/lexicon":
+"@niknak/lexicon@workspace:^, @niknak/lexicon@workspace:packages/lexicon":
   version: 0.0.0-use.local
   resolution: "@niknak/lexicon@workspace:packages/lexicon"
   dependencies:
@@ -627,7 +617,7 @@ __metadata:
     "@atproto/oauth-client-node": "npm:^0.2.7"
     "@atproto/sync": "npm:^0.1.9"
     "@atproto/xrpc-server": "npm:^0.7.6"
-    "@niknak/lexicon": "npm:^0.0.6"
+    "@niknak/lexicon": "workspace:^"
     "@types/cors": "npm:^2"
     "@types/express": "npm:^4"
     "@types/ws": "npm:^8"

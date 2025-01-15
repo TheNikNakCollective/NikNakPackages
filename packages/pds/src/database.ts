@@ -1,4 +1,4 @@
-import * as Profile from '@niknak/lexicon/dist/lexicon/types/app/bsky/actor/profile'
+import * as Profile from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 
 export interface Repository<R extends Record<string, unknown>> {
     create(profile: R): Promise<R>

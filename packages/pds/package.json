@@ -6,7 +6,7 @@
         "@atproto/oauth-client-node": "^0.2.7",
         "@atproto/sync": "^0.1.9",
         "@atproto/xrpc-server": "^0.7.6",
-        "@niknak/lexicon": "^0.0.6",
+        "@niknak/lexicon": "workspace:^",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
         "envalid": "^8.0.0",
