@@ -1,8 +1,8 @@
 export interface IngestorConstructor {
-    new (): Ingestor;
-  }
+    new (): Ingestor
+}
 
 export interface Ingestor {
-  start(): Promise<void>;
-  destory(): Promise<void>;
+    start(): Promise<void>
+    destory(): Promise<void>
 }

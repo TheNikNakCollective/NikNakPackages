@@ -2,41 +2,41 @@
     "$schema": "../node_modules/nx/schemas/project-schema.json",
     "name": "workspace",
     "targets": {
-      "packages:build": {
-        "executor": "nx:run-commands",
-        "options": {
-          "commands": [
-            {
-              "command": "nx run-many --target=build --projects=@niknak/pds",
-              "forwardAllArgs": false
+        "packages:build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    {
+                        "command": "nx run-many --target=build --projects=@niknak/pds",
+                        "forwardAllArgs": false
+                    }
+                ],
+                "parallel": false
             }
-          ],
-          "parallel": false
-        }
-      },
-      "packages:check-types": {
-        "executor": "nx:run-commands",
-        "options": {
-          "commands": [
-            {
-              "command": "nx run-many --target=check-types --projects=@niknak/pds",
-              "forwardAllArgs": false
+        },
+        "packages:check-types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    {
+                        "command": "nx run-many --target=check-types --projects=@niknak/pds",
+                        "forwardAllArgs": false
+                    }
+                ],
+                "parallel": false
             }
-          ],
-          "parallel": false
+        },
+        "version": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npx lerna version --force-publish --yes --create-release github"
+            }
+        },
+        "release": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npx lerna publish from-git --yes --loglevel debug --no-private"
+            }
         }
-      },
-      "version": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "npx lerna version --force-publish --yes --create-release github"
-        }
-      },
-      "release": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "npx lerna publish from-git --yes --loglevel debug --no-private"
-        }
-      }
     }
-  }
+}

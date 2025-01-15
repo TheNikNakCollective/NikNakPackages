@@ -1,51 +1,51 @@
-import { Database } from "@app/database";
+import { Database } from '@app/database'
 import type {
-  NodeSavedSession,
-  NodeSavedSessionStore,
-  NodeSavedState,
-  NodeSavedStateStore,
-} from "@atproto/oauth-client-node";
+    NodeSavedSession,
+    NodeSavedSessionStore,
+    NodeSavedState,
+    NodeSavedStateStore,
+} from '@atproto/oauth-client-node'
 
 export class StateStore implements NodeSavedStateStore {
-  constructor(private db: Database) {}
+    constructor(private db: Database) {}
 
-  async get(key: string): Promise<NodeSavedState | undefined> {
-    const result = await this.db.authState.findUnique(key);
-   
-    if (!result) return;
+    async get(key: string): Promise<NodeSavedState | undefined> {
+        const result = await this.db.authState.findUnique(key)
 
-    return JSON.parse(result.state) as NodeSavedState;
-  }
+        if (!result) return
 
-  async set(key: string, val: NodeSavedState) {
-    const state = JSON.stringify(val);
+        return JSON.parse(result.state) as NodeSavedState
+    }
 
-    await this.db.authState.upsert({key, state })
-  }
+    async set(key: string, val: NodeSavedState) {
+        const state = JSON.stringify(val)
 
-  async del(key: string) {
-    await this.db.authState.delete(key)
-  }
+        await this.db.authState.upsert({ key, state })
+    }
+
+    async del(key: string) {
+        await this.db.authState.delete(key)
+    }
 }
 
 export class SessionStore implements NodeSavedSessionStore {
-  constructor(private db: Database) {}
+    constructor(private db: Database) {}
 
-  async get(key: string): Promise<NodeSavedSession | undefined> {
-    const result = await this.db.authSession.findUnique(key);
+    async get(key: string): Promise<NodeSavedSession | undefined> {
+        const result = await this.db.authSession.findUnique(key)
 
-    if (!result) return;
+        if (!result) return
 
-    return JSON.parse(result.session) as NodeSavedSession;
-  }
+        return JSON.parse(result.session) as NodeSavedSession
+    }
 
-  async set(key: string, val: NodeSavedSession) {
-    const session = JSON.stringify(val);
+    async set(key: string, val: NodeSavedSession) {
+        const session = JSON.stringify(val)
 
-    await this.db.authSession.upsert({ key, session })
-  }
+        await this.db.authSession.upsert({ key, session })
+    }
 
-  async del(key: string) {
-    await this.db.authSession.delete(key)
-  }
+    async del(key: string) {
+        await this.db.authSession.delete(key)
+    }
 }

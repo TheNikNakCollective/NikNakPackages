@@ -1,37 +1,37 @@
 {
-  "name": "@niknak/pds",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/pds/src",
-  "projectType": "library",
-  "targets": {
-    "build": {
-      "executor": "nx:run-script",
-      "options": {
-        "script": "build"
-      },
-      "outputs": ["{projectRoot}/dist"],
-      "cache": true
+    "name": "@niknak/pds",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/pds/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "build"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true
+        },
+        "lex": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "lex"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true
+        },
+        "version": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npx lerna version --force-publish --yes --create-release github"
+            }
+        },
+        "release": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npx lerna publish from-git --yes --loglevel debug --no-private"
+            }
+        }
     },
-    "lex": {
-      "executor": "nx:run-script",
-      "options": {
-        "script": "lex"
-      },
-      "outputs": ["{projectRoot}/dist"],
-      "cache": true
-    },
-    "version": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx lerna version --force-publish --yes --create-release github"
-      }
-    },
-    "release": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx lerna publish from-git --yes --loglevel debug --no-private"
-      }
-    }
-  },
-  "tags": []
+    "tags": []
 }

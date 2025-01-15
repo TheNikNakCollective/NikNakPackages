@@ -1,3 +1,3 @@
-import { ProfileIngestor } from "./profile";
+import { ProfileIngestor } from './profile'
 
-export const ingestors = [ProfileIngestor];
+export const ingestors = [ProfileIngestor]

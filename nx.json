@@ -1,34 +1,30 @@
 {
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "tasksRunnerOptions": {
-      "default": {
-        "runner": "nx/tasks-runners/default",
-        "options": {
-          "cacheableOperations": ["build"]
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build"]
+            }
         }
-      }
     },
     "targetDefaults": {
-      "build": {
-        "executor": "nx:run-script",
-        "options": {
-          "script": "build"
+        "build": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "build"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true
         },
-        "outputs": [
-          "{projectRoot}/dist"
-        ],
-        "cache": true
-      },
-      "lex": {
-        "executor": "nx:run-script",
-        "options": {
-          "script": "lex"
-        },
-        "outputs": [
-          "{projectRoot}/dist"
-        ],
-        "cache": true
-      }
+        "lex": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "lex"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true
+        }
     },
     "defaultBase": "main"
-  }
+}
