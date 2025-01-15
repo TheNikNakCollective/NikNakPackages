@@ -12,15 +12,13 @@ export class StateStore implements NodeSavedStateStore {
     async get(key: string): Promise<NodeSavedState | undefined> {
         const result = await this.db.authState.findOneBy({ key })
 
-        if (!result || !result.state) return
+        if (!result) return
 
-        return JSON.parse(result.state) as NodeSavedState
+        return result.state
     }
 
     async set(key: string, val: NodeSavedState) {
-        const state = JSON.stringify(val)
-
-        await this.db.authState.save({ key, state })
+        await this.db.authState.save({ key, state: val })
     }
 
     async del(key: string) {
@@ -34,15 +32,13 @@ export class SessionStore implements NodeSavedSessionStore {
     async get(key: string): Promise<NodeSavedSession | undefined> {
         const result = await this.db.authSession.findOneBy({ key })
 
-        if (!result || !result.session) return
+        if (!result) return
 
-        return JSON.parse(result.session) as NodeSavedSession
+        return result.session
     }
 
     async set(key: string, val: NodeSavedSession) {
-        const session = JSON.stringify(val)
-
-        await this.db.authSession.save({ key, session })
+        await this.db.authSession.save({ key, session: val })
     }
 
     async del(key: string) {
