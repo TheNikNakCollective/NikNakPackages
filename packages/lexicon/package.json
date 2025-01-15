@@ -1,28 +1,28 @@
 {
-  "name": "@niknak/lexicon",
-  "version": "0.0.6",
-  "main": "./index.js",
-  "types": "./index.d.ts",
-  "dependencies": {
-    "@atproto/lexicon": "^0.4.5",
-    "@atproto/xrpc-server": "^0.7.6"
-  },
-  "devDependencies": {
-    "@atproto/lex-cli": "^0.5.5",
-    "lerna": "^8.1.9",
-    "nx": "^20.3.1",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.3"
-  },
-  "scripts": {
-    "build": "rm -rf dist && tsc -P tsconfig.json --declaration",
-    "check-types": "tsc -P tsconfig.json --noEmit",
-    "lex": "lex gen-server ./src/lexicon ./lexicons/**/*"
-  },
-  "files": [
-    "lexicon"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+    "name": "@niknak/lexicon",
+    "version": "0.0.7",
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "dependencies": {
+        "@atproto/lexicon": "^0.4.5",
+        "@atproto/xrpc-server": "^0.7.6"
+    },
+    "devDependencies": {
+        "@atproto/lex-cli": "^0.5.5",
+        "lerna": "^8.1.9",
+        "nx": "^20.3.1",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.3"
+    },
+    "scripts": {
+        "build": "rm -rf dist && tsc -P tsconfig.json --declaration",
+        "check-types": "tsc -P tsconfig.json --noEmit",
+        "lex": "lex gen-server ./src/lexicon ./lexicons/**/*"
+    },
+    "files": [
+        "lexicon"
+    ],
+    "publishConfig": {
+        "access": "public"
+    }
 }
