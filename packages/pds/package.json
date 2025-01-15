@@ -1,6 +1,6 @@
 {
   "name": "@niknak/pds",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "@atproto/identity": "^0.4.5",
     "@atproto/oauth-client-node": "^0.2.7",
