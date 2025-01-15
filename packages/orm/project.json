@@ -1,7 +1,7 @@
 {
-    "name": "@niknak/pds",
+    "name": "@niknak/orm",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/pds/src",
+    "sourceRoot": "packages/orm/src",
     "projectType": "library",
     "targets": {
         "build": {
@@ -12,8 +12,7 @@
             "outputs": ["{projectRoot}/dist"],
             "cache": true,
             "dependsOn": [
-              { "projects": ["@niknak/lexicon"], "target": "build" },
-              { "projects": ["@niknak/orm"], "target": "build" }
+              { "projects": ["@niknak/lexicon"], "target": "build" }
             ]
         },
         "lex": {

@@ -1,12 +1,12 @@
 import { IdResolver } from '@atproto/identity'
 import { ingestors as BksyIngestors } from './bksy'
-import { Database } from '@app/database'
 import { Ingestor } from './ingestor'
+import { NikNakDatabase } from '@niknak/orm'
 
 export class Ingestors {
     private ingestors: Ingestor[]
 
-    constructor(idResolver: IdResolver, db: Database) {
+    constructor(idResolver: IdResolver, db: NikNakDatabase) {
         this.ingestors = [...BksyIngestors].map((Ingestor) => {
             return new Ingestor(idResolver, db)
         })

@@ -1,18 +1,18 @@
-import { Database } from '@app/database'
 import type {
     NodeSavedSession,
     NodeSavedSessionStore,
     NodeSavedState,
     NodeSavedStateStore,
 } from '@atproto/oauth-client-node'
+import { NikNakDatabase } from '@niknak/orm'
 
 export class StateStore implements NodeSavedStateStore {
-    constructor(private db: Database) {}
+    constructor(private db: NikNakDatabase) {}
 
     async get(key: string): Promise<NodeSavedState | undefined> {
-        const result = await this.db.authState.findUnique(key)
+        const result = await this.db.authState.findOneBy({ key })
 
-        if (!result) return
+        if (!result || !result.state) return
 
         return JSON.parse(result.state) as NodeSavedState
     }
@@ -20,7 +20,7 @@ export class StateStore implements NodeSavedStateStore {
     async set(key: string, val: NodeSavedState) {
         const state = JSON.stringify(val)
 
-        await this.db.authState.upsert({ key, state })
+        await this.db.authState.save({ key, state })
     }
 
     async del(key: string) {
@@ -29,12 +29,12 @@ export class StateStore implements NodeSavedStateStore {
 }
 
 export class SessionStore implements NodeSavedSessionStore {
-    constructor(private db: Database) {}
+    constructor(private db: NikNakDatabase) {}
 
     async get(key: string): Promise<NodeSavedSession | undefined> {
-        const result = await this.db.authSession.findUnique(key)
+        const result = await this.db.authSession.findOneBy({ key })
 
-        if (!result) return
+        if (!result || !result.session) return
 
         return JSON.parse(result.session) as NodeSavedSession
     }
@@ -42,7 +42,7 @@ export class SessionStore implements NodeSavedSessionStore {
     async set(key: string, val: NodeSavedSession) {
         const session = JSON.stringify(val)
 
-        await this.db.authSession.upsert({ key, session })
+        await this.db.authSession.save({ key, session })
     }
 
     async del(key: string) {

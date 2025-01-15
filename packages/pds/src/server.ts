@@ -1,6 +1,5 @@
 import type http from 'node:http'
 import events from 'node:events'
-import { Database } from './database'
 import { createBidirectionalResolver, createIdResolver } from './id-resolver'
 import { Ingestors } from './ingestors'
 import express from 'express'
@@ -8,6 +7,7 @@ import { env } from './env'
 import { AppContext } from './context'
 import pino from 'pino'
 import { createClient } from './auth/client'
+import { NikNakDatabase } from '@niknak/orm'
 
 export class Server {
     constructor(
@@ -16,7 +16,7 @@ export class Server {
         public ctx: AppContext
     ) {}
 
-    static async create(db: Database) {
+    static async create(db: NikNakDatabase) {
         const logger = pino({ name: 'server start' })
 
         const baseIdResolver = createIdResolver()
@@ -64,7 +64,7 @@ export class Server {
     }
 }
 
-export const run = async (db: Database) => {
+export const run = async (db: NikNakDatabase) => {
     const server = await Server.create(db)
 
     const onCloseSignal = async () => {

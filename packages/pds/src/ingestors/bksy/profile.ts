@@ -2,14 +2,14 @@ import pino from 'pino'
 import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
 import * as Profile from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
-import { Database } from '@app/database'
 import { Ingestor } from '../ingestor'
+import { NikNakDatabase } from '@niknak/orm'
 
 export class ProfileIngestor implements Ingestor {
     protected logger = pino({ name: 'firehose:app.bsky.actor.profile' })
     protected firehose: Firehose
 
-    constructor(idResolver: IdResolver, db: Database) {
+    constructor(idResolver: IdResolver, db: NikNakDatabase) {
         this.firehose = new Firehose({
             idResolver,
             handleEvent: async (evt) => {
@@ -21,13 +21,13 @@ export class ProfileIngestor implements Ingestor {
                         Profile.isRecord(record) &&
                         Profile.validateRecord(record).success
                     ) {
-                        await db.profile.upsert(record)
+                        await db.profileRepository.save(record)
                     }
                 } else if (
                     evt.event === 'delete' &&
                     evt.collection === 'app.bsky.actor.profile'
                 ) {
-                    await db.profile.delete(evt.uri.toString())
+                    await db.profileRepository.delete(evt.uri.toString())
                 }
             },
             onError: (err) => {

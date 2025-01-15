@@ -1,0 +1,26 @@
+{
+    "name": "@niknak/orm",
+    "version": "0.0.7",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "devDependencies": {
+        "@types/node": "^22.10.6",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.3"
+    },
+    "scripts": {
+        "build": "rm -rf dist && tsc -P tsconfig.json --declaration",
+        "check-types": "tsc -P tsconfig.json --noEmit"
+    },
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@niknak/lexicon": "workspace:^",
+        "reflect-metadata": "^0.2.2",
+        "typeorm": "^0.3.20"
+    }
+}

@@ -1,9 +1,9 @@
 import { NodeOAuthClient } from '@atproto/oauth-client-node'
 import { SessionStore, StateStore } from './storage'
-import { Database } from '@app/database'
 import { env } from '@app/env'
+import { NikNakDatabase } from '@niknak/orm'
 
-export const createClient = async (db: Database) => {
+export const createClient = async (db: NikNakDatabase) => {
     const publicUrl = env.PUBLIC_URL
     const url = publicUrl || `http://127.0.0.1:${env.PORT}`
 
