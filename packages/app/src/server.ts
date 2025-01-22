@@ -1,12 +1,12 @@
 import type http from 'node:http'
 import events from 'node:events'
-import { createBidirectionalResolver, createIdResolver } from './id-resolver'
-import { Ingestors } from './ingestors'
+import { createBidirectionalResolver, createIdResolver } from '@niknak/id-resolver'
 import express from 'express'
 import { env } from './env'
 import { AppContext } from './context'
 import { createClient } from './auth/client'
 import { NikNakDatabase } from '@niknak/orm'
+import { createRouter } from './router'
 
 export class Server {
     constructor(
@@ -19,25 +19,22 @@ export class Server {
         const baseIdResolver = createIdResolver()
         const resolver = createBidirectionalResolver(baseIdResolver)
 
-        // const ingestors = new Ingestors(baseIdResolver, db)
-
-        // await ingestors.start()
-
         const oauthClient = await createClient(db)
 
         const ctx = {
             db,
-            // ingestors,
             logger: console,
             oauthClient,
             resolver,
         }
 
         const app = express()
-
+        const router = createRouter(ctx)
+        
         app.set('trust proxy', true)
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
+        app.use(router)
         app.use("/", (_req, res) => res.send("Hello"))
         app.use((_req, res) => res.sendStatus(404))
 
@@ -52,8 +49,6 @@ export class Server {
 
     async close() {
         this.ctx.logger.info('sigint received, shutting down')
-
-        // await this.ctx.ingestors.destroy()
 
         return new Promise<void>((resolve) => {
             this.server.close(() => {

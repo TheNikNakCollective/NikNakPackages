@@ -1,0 +1,29 @@
+{
+    "name": "@niknak/ingestor",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/ingestor/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "build"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true,
+            "dependsOn": [
+              { "projects": ["@niknak/lexicon"], "target": "build" },
+              { "projects": ["@niknak/orm"], "target": "build" }
+            ]
+        },
+        "lex": {
+            "executor": "nx:run-script",
+            "options": {
+                "script": "lex"
+            },
+            "outputs": ["{projectRoot}/dist"],
+            "cache": true
+        }
+    },
+    "tags": []
+}
