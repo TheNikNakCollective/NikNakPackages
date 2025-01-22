@@ -3,9 +3,7 @@
         "target": "ESNext",
         "module": "CommonJS",
         "baseUrl": ".",
-        "paths": {
-            "@app/*": ["src/*"]
-        },
+        "paths": {},
         "moduleResolution": "Node10",
         "outDir": "dist",
         "importsNotUsedAsValues": "remove",

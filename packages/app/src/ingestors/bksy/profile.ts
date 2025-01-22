@@ -1,4 +1,3 @@
-import pino from 'pino'
 import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
 import * as Profile from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
@@ -6,7 +5,7 @@ import { Ingestor } from '../ingestor'
 import { NikNakDatabase } from '@niknak/orm'
 
 export class ProfileIngestor implements Ingestor {
-    protected logger = pino({ name: 'firehose:app.bsky.actor.profile' })
+    protected logger = console
     protected firehose: Firehose
 
     constructor(idResolver: IdResolver, db: NikNakDatabase) {

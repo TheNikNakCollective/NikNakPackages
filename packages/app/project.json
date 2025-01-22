@@ -1,7 +1,7 @@
 {
-    "name": "@niknak/pds",
+    "name": "@niknak/app",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/pds/src",
+    "sourceRoot": "packages/app/src",
     "projectType": "library",
     "targets": {
         "build": {

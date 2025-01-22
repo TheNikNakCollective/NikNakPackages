@@ -5,7 +5,6 @@ import { Ingestors } from './ingestors'
 import express from 'express'
 import { env } from './env'
 import { AppContext } from './context'
-import pino from 'pino'
 import { createClient } from './auth/client'
 import { NikNakDatabase } from '@niknak/orm'
 
@@ -17,21 +16,19 @@ export class Server {
     ) {}
 
     static async create(db: NikNakDatabase) {
-        const logger = pino({ name: 'server start' })
-
         const baseIdResolver = createIdResolver()
         const resolver = createBidirectionalResolver(baseIdResolver)
 
-        const ingestors = new Ingestors(baseIdResolver, db)
+        // const ingestors = new Ingestors(baseIdResolver, db)
 
-        await ingestors.start()
+        // await ingestors.start()
 
         const oauthClient = await createClient(db)
 
         const ctx = {
             db,
-            ingestors,
-            logger,
+            // ingestors,
+            logger: console,
             oauthClient,
             resolver,
         }
@@ -41,9 +38,12 @@ export class Server {
         app.set('trust proxy', true)
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
+        app.use("/", (_req, res) => res.send("Hello"))
         app.use((_req, res) => res.sendStatus(404))
 
         const server = app.listen(env.PORT)
+
+        console.log(env);
 
         await events.once(server, 'listening')
 
@@ -53,7 +53,7 @@ export class Server {
     async close() {
         this.ctx.logger.info('sigint received, shutting down')
 
-        await this.ctx.ingestors.destroy()
+        // await this.ctx.ingestors.destroy()
 
         return new Promise<void>((resolve) => {
             this.server.close(() => {
