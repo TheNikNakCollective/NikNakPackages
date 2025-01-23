@@ -7,3 +7,6 @@ export type { NikNakDatabase } from './database'
 export { createDatabase } from './database'
 
 export const entities = [Profile, AuthSession, AuthState]
+
+
+export { Profile, AuthSession, AuthState }

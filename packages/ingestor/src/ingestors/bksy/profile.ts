@@ -1,8 +1,8 @@
 import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
-import * as Profile from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
+import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { Ingestor } from '../ingestor'
-import { NikNakDatabase } from '@niknak/orm'
+import { NikNakDatabase, Profile } from '@niknak/orm'
 
 export class ProfileIngestor implements Ingestor {
     protected logger = console
@@ -17,10 +17,19 @@ export class ProfileIngestor implements Ingestor {
 
                     if (
                         evt.collection === 'app.bsky.actor.profile' &&
-                        Profile.isRecord(record) &&
-                        Profile.validateRecord(record).success
+                        ProfileLexicon.isRecord(record) &&
+                        ProfileLexicon.validateRecord(record).success
                     ) {
-                        await db.profileRepository.save(record)
+                        
+                        const data: Profile = {
+                            ...record,
+                            uri: evt.uri.toString(),
+                            did: evt.did,
+                            avatar: record.avatar,
+                            banner: record.banner,
+                        };
+
+                        await db.profileRepository.save(data)
                     }
                 } else if (
                     evt.event === 'delete' &&

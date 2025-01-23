@@ -6,7 +6,8 @@
     ],
     "scripts": {
         "format": "prettier --write \"**/*.{js,ts,.json}\"",
-        "format:check": "prettier --check \"**/*.{js,ts,.json}\""
+        "format:check": "prettier --check \"**/*.{js,ts,.json}\"",
+        "build": "nx run workspace:packages:build"
     },
     "devDependencies": {
         "lerna": "^8.1.9",

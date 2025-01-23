@@ -35,12 +35,9 @@ export class Server {
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
         app.use(router)
-        app.use("/", (_req, res) => res.send("Hello"))
         app.use((_req, res) => res.sendStatus(404))
 
         const server = app.listen(env.PORT)
-
-        console.log(env);
 
         await events.once(server, 'listening')
 
@@ -60,6 +57,8 @@ export class Server {
 }
 
 export const run = async (db: NikNakDatabase) => {
+    console.log('Starting server...')
+    
     const server = await Server.create(db)
 
     const onCloseSignal = async () => {
@@ -70,4 +69,6 @@ export const run = async (db: NikNakDatabase) => {
 
     process.on('SIGINT', onCloseSignal)
     process.on('SIGTERM', onCloseSignal)
+
+    console.log('Server successfully started!');
 }

@@ -3,6 +3,8 @@ import { Ingestors } from './ingestors'
 import { NikNakDatabase } from '@niknak/orm'
 
 export async function start(db: NikNakDatabase) {
+    console.log('Starting ingestor...');
+
     const baseIdResolver = createIdResolver()
 
     const ingestors = new Ingestors(baseIdResolver, db)
@@ -15,6 +17,8 @@ export async function start(db: NikNakDatabase) {
 
     process.on('SIGINT', onCloseSignal)
     process.on('SIGTERM', onCloseSignal)
+
+    console.log('Ingestor successfully started!');
 
     await ingestors.start()
 }
