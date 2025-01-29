@@ -2,7 +2,7 @@
     "name": "@niknak/app",
     "version": "0.0.11",
     "dependencies": {
-        "@atproto/api": "^0.13.30",
+        "@atproto/api": "^0.13.31",
         "@atproto/identity": "^0.4.5",
         "@atproto/oauth-client-node": "^0.2.7",
         "@atproto/sync": "^0.1.9",
@@ -10,6 +10,7 @@
         "@niknak/id-resolver": "workspace:^",
         "@niknak/lexicon": "workspace:^",
         "@niknak/orm": "workspace:^",
+        "cookie": "0.7.2",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
         "envalid": "^8.0.0",
@@ -18,6 +19,7 @@
         "ws": "^8.18.0"
     },
     "devDependencies": {
+        "@types/cookie": "0.6.0",
         "@types/cors": "^2",
         "@types/express": "^4",
         "@types/ws": "^8",

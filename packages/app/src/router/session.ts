@@ -1,5 +1,3 @@
-import { env } from '@app/env'
-import { getIronSession } from 'iron-session'
 import { Agent } from '@atproto/api'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { AppContext } from '@app/context'
@@ -11,21 +9,25 @@ export async function getSessionAgent(
     res: ServerResponse<IncomingMessage>,
     ctx: AppContext
 ) {
-    const session = await getIronSession<Session>(req, res, {
-        cookieName: 'niknak-bsky',
-        password: env.COOKIE_SECRET,
-    })
+    const authorization = req.headers['authorization']
 
-    if (!session.did) return null
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+        ctx.logger.warn('No Authorization header provided')
+        return null
+    }
+
+    const token = authorization.split(' ')[1]
+
+    if (!token) return null
 
     try {
-        const oauthSession = await ctx.oauthClient.restore(session.did)
+        const oauthSession = await ctx.oauthClient.restore(token)
 
         return oauthSession ? new Agent(oauthSession) : null
     } catch (err) {
         ctx.logger.warn({ err }, 'oauth restore failed')
 
-        session.destroy()
+        await ctx.oauthClient.revoke(token)
 
         return null
     }

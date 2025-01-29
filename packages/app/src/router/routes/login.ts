@@ -12,8 +12,6 @@ export function login(router: express.Router, ctx: AppContext) {
             scope: 'atproto transition:generic',
           })
           
-          console.log('url', url);
-
           return res.status(200).json({ url: url.toString() })
         })
       )

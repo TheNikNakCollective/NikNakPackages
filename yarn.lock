@@ -103,9 +103,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atproto/api@npm:^0.13.30":
-  version: 0.13.30
-  resolution: "@atproto/api@npm:0.13.30"
+"@atproto/api@npm:^0.13.31":
+  version: 0.13.31
+  resolution: "@atproto/api@npm:0.13.31"
   dependencies:
     "@atproto/common-web": "npm:^0.3.2"
     "@atproto/lexicon": "npm:^0.4.5"
@@ -115,7 +115,7 @@ __metadata:
     multiformats: "npm:^9.9.0"
     tlds: "npm:^1.234.0"
     zod: "npm:^3.23.8"
-  checksum: 10c0/0668b0d7736d7f112650fd20927f9510696a4953a68f5cf80c37da3e02659c82b45f3cbe5a8716f39dfa6326418b170253d8631d5b54d37da77e796927825521
+  checksum: 10c0/1ffe96ae3ebecf1e0ef6abc3d4de92b3ac7fa1c406c5356b8e8a7065346541ffda3ce0b5baa2b60c37819f77591ded7c47ff457f9a89912cd3704d8bc3ab1d33
   languageName: node
   linkType: hard
 
@@ -637,7 +637,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@niknak/app@workspace:packages/app"
   dependencies:
-    "@atproto/api": "npm:^0.13.30"
+    "@atproto/api": "npm:^0.13.31"
     "@atproto/identity": "npm:^0.4.5"
     "@atproto/oauth-client-node": "npm:^0.2.7"
     "@atproto/sync": "npm:^0.1.9"
@@ -645,9 +645,11 @@ __metadata:
     "@niknak/id-resolver": "workspace:^"
     "@niknak/lexicon": "workspace:^"
     "@niknak/orm": "workspace:^"
+    "@types/cookie": "npm:0.6.0"
     "@types/cors": "npm:^2"
     "@types/express": "npm:^4"
     "@types/ws": "npm:^8"
+    cookie: "npm:0.7.2"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.4.7"
     envalid: "npm:^8.0.0"
@@ -1396,6 +1398,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/2e1cdba2c410f25649e77856505cd60223250fa12dff7a503e492208dbfdd25f62859918f28aba95315251fd1f5e1ffbfca1e25e73037189ab85dd3f8d0a148c
+  languageName: node
+  linkType: hard
+
+"@types/cookie@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 10c0/5b326bd0188120fb32c0be086b141b1481fec9941b76ad537f9110e10d61ee2636beac145463319c71e4be67a17e85b81ca9e13ceb6e3bb63b93d16824d6c149
   languageName: node
   linkType: hard
 
@@ -2491,7 +2500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.7.2":
+"cookie@npm:0.7.2, cookie@npm:^0.7.2":
   version: 0.7.2
   resolution: "cookie@npm:0.7.2"
   checksum: 10c0/9596e8ccdbf1a3a88ae02cf5ee80c1c50959423e1022e4e60b91dd87c622af1da309253d8abdb258fb5e3eacb4f08e579dc58b4897b8087574eee0fd35dfa5d2
