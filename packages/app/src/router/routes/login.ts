@@ -5,14 +5,16 @@ import { AppContext } from '@app/context'
 export function login(router: express.Router, ctx: AppContext) {
     router.post(
         '/login',
-        handler(async (req, res) => {
+        handler(async function login(req, res) {
           const handle = req.body?.handle
 
           const url = await ctx.oauthClient.authorize(handle, {
             scope: 'atproto transition:generic',
           })
           
-          return res.redirect(url.toString())
+          console.log('url', url);
+
+          return res.status(200).json({ url: url.toString() })
         })
       )
 }

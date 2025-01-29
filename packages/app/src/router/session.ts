@@ -12,10 +12,10 @@ export async function getSessionAgent(
     ctx: AppContext
 ) {
     const session = await getIronSession<Session>(req, res, {
-        cookieName: 'sid',
+        cookieName: 'niknak-bsky',
         password: env.COOKIE_SECRET,
     })
-    
+
     if (!session.did) return null
 
     try {

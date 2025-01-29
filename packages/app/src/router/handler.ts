@@ -1,11 +1,11 @@
 import express from 'express'
 
-export function handler(
+export function handler<T = void>(
     fn: (
         req: express.Request,
         res: express.Response,
         next: express.NextFunction
-    ) => Promise<void>
+    ) => Promise<T>
 ) {
     return async (
         req: express.Request,

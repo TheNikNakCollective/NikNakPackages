@@ -8,9 +8,9 @@ import { env } from '@app/env'
 export function logout(router: express.Router, ctx: AppContext) {
     router.post(
         '/logout',
-        handler(async (req, res) => {
+        handler(async function logout(req, res) {
             const session = await getIronSession<Session>(req, res, {
-                cookieName: 'sid',
+                cookieName: 'niknak-bsky',
                 password: env.COOKIE_SECRET,
             })
 

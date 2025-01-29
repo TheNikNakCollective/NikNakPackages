@@ -29,12 +29,11 @@ export class Server {
         }
 
         const app = express()
-        const router = createRouter(ctx)
         
         app.set('trust proxy', true)
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
-        app.use(router)
+        app.use(createRouter(ctx))
         app.use((_req, res) => res.sendStatus(404))
 
         const server = app.listen(env.PORT)
@@ -58,7 +57,7 @@ export class Server {
 
 export const run = async (db: NikNakDatabase) => {
     console.log('Starting server...')
-    
+
     const server = await Server.create(db)
 
     const onCloseSignal = async () => {
