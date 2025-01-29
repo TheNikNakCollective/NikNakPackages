@@ -3,10 +3,10 @@ import { handler } from '../handler'
 import { AppContext } from '@app/context'
 import { getSessionAgent } from '../session'
 
-export function logout(router: express.Router, ctx: AppContext) {
+export function oauthLogout(router: express.Router, ctx: AppContext) {
     router.post(
-        '/logout',
-        handler(async function logout(req, res) {
+        '/oauth/logout',
+        handler(async function oauthLogout(req, res) {
             const agent = await getSessionAgent(req, res, ctx)
 
             if (agent) {

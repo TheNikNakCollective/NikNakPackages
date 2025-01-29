@@ -3,10 +3,10 @@ import { handler } from '../handler'
 import { AppContext } from '@app/context'
 import { getSessionAgent } from '../session'
 
-export function me(router: express.Router, ctx: AppContext) {
+export function oauthUserInfo(router: express.Router, ctx: AppContext) {
     router.get(
-        '/me',
-        handler(async function me(req, res) {
+        '/oauth/userinfo',
+        handler(async function oauthUserInfo(req, res) {
             const agent = await getSessionAgent(req, res, ctx)
 
             const did = agent?.assertDid;
