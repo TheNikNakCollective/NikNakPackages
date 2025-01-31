@@ -293,7 +293,12 @@ export function RegisterRoutes(app: Router) {
                 required: true,
                 dataType: 'object',
             },
-            undefined: { in: 'body', required: true, ref: 'LoginBody' },
+            body: {
+                in: 'body',
+                name: 'body',
+                required: true,
+                ref: 'LoginBody',
+            },
         }
     app.post(
         '/oauth/login',

@@ -22,8 +22,9 @@ export class OauthController extends Controller {
     )
     public async login(
         @Request() req: RequestWithAppContext,
-        @Body() { handle }: LoginBody
+        @Body() body: LoginBody
     ): Promise<LoginURL> {
+        const { handle } = body
         const url = await req.context.oauthClient.authorize(handle, {
             scope: 'atproto transition:generic',
         })
