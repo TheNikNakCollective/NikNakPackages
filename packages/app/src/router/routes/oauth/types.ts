@@ -4,6 +4,10 @@ export type LoginURL = {
     url: string
 }
 
+export type LoginBody = {
+    handle: string
+}
+
 export type LogoutResponse = {
     message: string
 }

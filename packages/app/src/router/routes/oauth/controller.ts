@@ -7,9 +7,10 @@ import {
     Request,
     Res,
     TsoaResponse,
+    Body,
 } from 'tsoa'
 import { RequestWithAppContext } from '@app/context'
-import { LoginURL, LogoutResponse, UserInfo } from './types'
+import { LoginBody, LoginURL, LogoutResponse, UserInfo } from './types'
 import { getSessionAgent } from '@app/session'
 
 @Route('oauth')
@@ -20,10 +21,9 @@ export class OauthController extends Controller {
         'Returns the redirect url for the user to login to blue sky'
     )
     public async login(
-        @Request() req: RequestWithAppContext
+        @Request() req: RequestWithAppContext,
+        @Body() { handle }: LoginBody
     ): Promise<LoginURL> {
-        const handle = req.body?.handle
-
         const url = await req.context.oauthClient.authorize(handle, {
             scope: 'atproto transition:generic',
         })
