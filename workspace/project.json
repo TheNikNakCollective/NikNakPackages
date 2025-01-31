@@ -7,7 +7,7 @@
             "options": {
                 "commands": [
                     {
-                        "command": "nx run-many --target=build --projects=@niknak/app,@niknak/lexicon,@niknak/orm,@niknak/ingestor,@niknak/id-resolver",
+                        "command": "nx run-many --target=build --projects=@niknak/app,@niknak/app-sdk,@niknak/lexicon,@niknak/orm,@niknak/ingestor,@niknak/id-resolver",
                         "forwardAllArgs": false
                     }
                 ],
@@ -19,7 +19,7 @@
             "options": {
                 "commands": [
                     {
-                        "command": "nx run-many --target=check-types --projects=@niknak/app,@niknak/lexicon,@niknak/orm,@niknak/ingestor,@niknak/id-resolver",
+                        "command": "nx run-many --target=check-types --projects=@niknak/app,@niknak/app-sdk,@niknak/lexicon,@niknak/orm,@niknak/ingestor,@niknak/id-resolver",
                         "forwardAllArgs": false
                     }
                 ],

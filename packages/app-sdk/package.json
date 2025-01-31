@@ -1,0 +1,23 @@
+{
+    "name": "@niknak/app-sdk",
+    "version": "0.0.11",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "yarn gen && rm -rf dist && tsc -P tsconfig.json --declaration",
+        "check-types": "tsc -P tsconfig.json --noEmit",
+        "gen": "openapi-generator-cli generate -i ../app/src/swagger.json -g typescript-axios -o src/"
+    },
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@openapitools/openapi-generator-cli": "^2.16.3"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3"
+    }
+}

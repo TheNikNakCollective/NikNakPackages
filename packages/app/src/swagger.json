@@ -1,0 +1,559 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"LoginURL": {
+				"properties": {
+					"url": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"url"
+				],
+				"type": "object"
+			},
+			"LogoutResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object"
+			},
+			"ProfileAssociatedChat": {
+				"properties": {
+					"allowIncoming": {
+						"anyOf": [
+							{
+								"allOf": [
+									{
+										"type": "string"
+									},
+									{
+										"properties": {},
+										"type": "object"
+									}
+								]
+							},
+							{
+								"type": "string",
+								"enum": [
+									"all",
+									"none",
+									"following"
+								]
+							}
+						]
+					}
+				},
+				"required": [
+					"allowIncoming"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ProfileAssociated": {
+				"properties": {
+					"lists": {
+						"type": "number",
+						"format": "double"
+					},
+					"feedgens": {
+						"type": "number",
+						"format": "double"
+					},
+					"starterPacks": {
+						"type": "number",
+						"format": "double"
+					},
+					"labeler": {
+						"type": "boolean"
+					},
+					"chat": {
+						"$ref": "#/components/schemas/ProfileAssociatedChat"
+					}
+				},
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ListPurpose": {
+				"anyOf": [
+					{
+						"allOf": [
+							{
+								"type": "string"
+							},
+							{
+								"properties": {},
+								"type": "object"
+							}
+						]
+					},
+					{
+						"type": "string",
+						"enum": [
+							"app.bsky.graph.defs#modlist",
+							"app.bsky.graph.defs#curatelist",
+							"app.bsky.graph.defs#referencelist"
+						]
+					}
+				]
+			},
+			"Uint8Array": {
+				"description": "A typed array of 8-bit unsigned integer values. The contents are initialized to 0. If the\nrequested number of bytes could not be allocated an exception is raised.",
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Label": {
+				"description": "Metadata tag on an atproto resource (eg, repo or record).",
+				"properties": {
+					"ver": {
+						"type": "number",
+						"format": "double",
+						"description": "The AT Protocol version of the label object."
+					},
+					"src": {
+						"type": "string",
+						"description": "DID of the actor who created this label."
+					},
+					"uri": {
+						"type": "string",
+						"description": "AT URI of the record, repository (account), or other resource that this label applies to."
+					},
+					"cid": {
+						"type": "string",
+						"description": "Optionally, CID specifying the specific version of 'uri' resource this label applies to."
+					},
+					"val": {
+						"type": "string",
+						"description": "The short string name of the value or type of this label."
+					},
+					"neg": {
+						"type": "boolean",
+						"description": "If true, this is a negation label, overwriting a previous label."
+					},
+					"cts": {
+						"type": "string",
+						"description": "Timestamp when this label was created."
+					},
+					"exp": {
+						"type": "string",
+						"description": "Timestamp at which this label expires (no longer applies)."
+					},
+					"sig": {
+						"$ref": "#/components/schemas/Uint8Array",
+						"description": "Signature of dag-cbor encoded label."
+					}
+				},
+				"required": [
+					"src",
+					"uri",
+					"val",
+					"cts"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ListViewerState": {
+				"properties": {
+					"muted": {
+						"type": "boolean"
+					},
+					"blocked": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ListViewBasic": {
+				"properties": {
+					"uri": {
+						"type": "string"
+					},
+					"cid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"purpose": {
+						"$ref": "#/components/schemas/ListPurpose"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"listItemCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"labels": {
+						"items": {
+							"$ref": "#/components/schemas/Label"
+						},
+						"type": "array"
+					},
+					"viewer": {
+						"$ref": "#/components/schemas/ListViewerState"
+					},
+					"indexedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uri",
+					"cid",
+					"name",
+					"purpose"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ProfileViewBasic": {
+				"properties": {
+					"did": {
+						"type": "string"
+					},
+					"handle": {
+						"type": "string"
+					},
+					"displayName": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"associated": {
+						"$ref": "#/components/schemas/ProfileAssociated"
+					},
+					"viewer": {
+						"$ref": "#/components/schemas/ViewerState"
+					},
+					"labels": {
+						"items": {
+							"$ref": "#/components/schemas/Label"
+						},
+						"type": "array"
+					},
+					"createdAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"did",
+					"handle"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"KnownFollowers": {
+				"description": "The subject's followers whom you also follow",
+				"properties": {
+					"count": {
+						"type": "number",
+						"format": "double"
+					},
+					"followers": {
+						"items": {
+							"$ref": "#/components/schemas/ProfileViewBasic"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"count",
+					"followers"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ViewerState": {
+				"description": "Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.",
+				"properties": {
+					"muted": {
+						"type": "boolean"
+					},
+					"mutedByList": {
+						"$ref": "#/components/schemas/ListViewBasic"
+					},
+					"blockedBy": {
+						"type": "boolean"
+					},
+					"blocking": {
+						"type": "string"
+					},
+					"blockingByList": {
+						"$ref": "#/components/schemas/ListViewBasic"
+					},
+					"following": {
+						"type": "string"
+					},
+					"followedBy": {
+						"type": "string"
+					},
+					"knownFollowers": {
+						"$ref": "#/components/schemas/KnownFollowers"
+					}
+				},
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"StarterPackViewBasic": {
+				"properties": {
+					"uri": {
+						"type": "string"
+					},
+					"cid": {
+						"type": "string"
+					},
+					"record": {
+						"properties": {},
+						"type": "object"
+					},
+					"creator": {
+						"$ref": "#/components/schemas/ProfileViewBasic"
+					},
+					"listItemCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"joinedWeekCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"joinedAllTimeCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"labels": {
+						"items": {
+							"$ref": "#/components/schemas/Label"
+						},
+						"type": "array"
+					},
+					"indexedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uri",
+					"cid",
+					"record",
+					"creator",
+					"indexedAt"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"Main": {
+				"properties": {
+					"uri": {
+						"type": "string"
+					},
+					"cid": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uri",
+					"cid"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"ProfileViewDetailed": {
+				"properties": {
+					"did": {
+						"type": "string"
+					},
+					"handle": {
+						"type": "string"
+					},
+					"displayName": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"banner": {
+						"type": "string"
+					},
+					"followersCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"followsCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"postsCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"associated": {
+						"$ref": "#/components/schemas/ProfileAssociated"
+					},
+					"joinedViaStarterPack": {
+						"$ref": "#/components/schemas/StarterPackViewBasic"
+					},
+					"indexedAt": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"viewer": {
+						"$ref": "#/components/schemas/ViewerState"
+					},
+					"labels": {
+						"items": {
+							"$ref": "#/components/schemas/Label"
+						},
+						"type": "array"
+					},
+					"pinnedPost": {
+						"$ref": "#/components/schemas/Main"
+					}
+				},
+				"required": [
+					"did",
+					"handle"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"UserInfo": {
+				"$ref": "#/components/schemas/ProfileViewDetailed"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "@niknak/app",
+		"version": "0.0.11",
+		"contact": {}
+	},
+	"paths": {
+		"/oauth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Returns the redirect url for the user to login to blue sky",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginURL"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/oauth/callback": {
+			"get": {
+				"operationId": "Callback",
+				"responses": {
+					"302": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"Location": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"Location"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/oauth/logout": {
+			"post": {
+				"operationId": "Logout",
+				"responses": {
+					"200": {
+						"description": "Logs the user out",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LogoutResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/oauth/userinfo": {
+			"get": {
+				"operationId": "Userinfo",
+				"responses": {
+					"200": {
+						"description": "Get user info for authenticated user",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserInfo"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/healthcheck": {
+			"get": {
+				"operationId": "Healthcheck",
+				"responses": {
+					"200": {
+						"description": "Healthcheck",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

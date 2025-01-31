@@ -1,12 +1,11 @@
 import { Agent } from '@atproto/api'
-import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { IncomingMessage } from 'node:http'
 import { AppContext } from '@app/context'
 
 export type Session = { did: string }
 
 export async function getSessionAgent(
     req: IncomingMessage,
-    res: ServerResponse<IncomingMessage>,
     ctx: AppContext
 ) {
     const authorization = req.headers['authorization']

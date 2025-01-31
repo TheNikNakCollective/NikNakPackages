@@ -1,12 +1,17 @@
 import type http from 'node:http'
 import events from 'node:events'
-import { createBidirectionalResolver, createIdResolver } from '@niknak/id-resolver'
-import express from 'express'
+import {
+    createBidirectionalResolver,
+    createIdResolver,
+} from '@niknak/id-resolver'
+import express, { Response, Request } from 'express'
 import { env } from './env'
-import { AppContext } from './context'
+import { AppContext, createContextMiddleware } from './context'
 import { createClient } from './auth/client'
 import { NikNakDatabase } from '@niknak/orm'
-import { createRouter } from './router'
+import { RegisterRoutes } from './routes'
+import swaggerUi from 'swagger-ui-express'
+import path from 'path'
 
 export class Server {
     constructor(
@@ -21,6 +26,8 @@ export class Server {
 
         const oauthClient = await createClient(db)
 
+        const swaggerDoc = await import('./swagger.json')
+
         const ctx = {
             db,
             logger: console,
@@ -28,13 +35,25 @@ export class Server {
             resolver,
         }
 
+        const contextMiddleware = createContextMiddleware(ctx)
+
         const app = express()
-        
+
         app.set('trust proxy', true)
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
-        app.use(createRouter(ctx))
-        app.use((_req, res) => res.sendStatus(404))
+        app.use(contextMiddleware)
+
+        app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, { }))
+        app.get("/swagger.json", (req, res) => {
+            res.json(swaggerDoc);
+          });
+
+        RegisterRoutes(app)
+
+        app.use((_req, res) => {
+            res.sendStatus(404)
+        })
 
         const server = app.listen(env.PORT)
 
@@ -69,5 +88,5 @@ export const run = async (db: NikNakDatabase) => {
     process.on('SIGINT', onCloseSignal)
     process.on('SIGTERM', onCloseSignal)
 
-    console.log('Server successfully started!');
+    console.log('Server successfully started!')
 }
