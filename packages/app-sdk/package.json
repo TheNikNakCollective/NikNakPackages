@@ -4,9 +4,10 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "build": "yarn gen && rm -rf dist && tsc -P tsconfig.json --declaration",
+        "build": "yarn gen && rm -rf dist && tsc -P tsconfig.json --declaration && yarn format",
         "check-types": "tsc -P tsconfig.json --noEmit",
-        "gen": "openapi-generator-cli generate -i ../app/src/swagger.json -g typescript-axios -o src/"
+        "gen": "openapi-generator-cli generate -i ../app/src/swagger.json -g typescript-axios -o src/",
+        "format": "prettier --write \"**/*.{js,ts,.json}\""
     },
     "files": [
         "dist"
@@ -18,6 +19,7 @@
         "@openapitools/openapi-generator-cli": "^2.16.3"
     },
     "devDependencies": {
+        "prettier": "^3.4.2",
         "typescript": "^5.7.3"
     }
 }
