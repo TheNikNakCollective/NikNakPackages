@@ -6,6 +6,8 @@ export const blobRefTransformer: ValueTransformer = {
         return value ? (value.toJSON() as TypedJsonBlobRef) : undefined
     },
     from: (value: TypedJsonBlobRef | undefined): BlobRef | undefined => {
-        return value ? new BlobRef(value.ref, value.mimeType, value.size, value) : undefined
+        return value
+            ? new BlobRef(value.ref, value.mimeType, value.size, value)
+            : undefined
     },
 }

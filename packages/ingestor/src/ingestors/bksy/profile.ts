@@ -20,14 +20,13 @@ export class ProfileIngestor implements Ingestor {
                         ProfileLexicon.isRecord(record) &&
                         ProfileLexicon.validateRecord(record).success
                     ) {
-                        
                         const data: Profile = {
                             ...record,
                             uri: evt.uri.toString(),
                             did: evt.did,
                             avatar: record.avatar,
                             banner: record.banner,
-                        };
+                        }
 
                         await db.profileRepository.save(data)
                     }

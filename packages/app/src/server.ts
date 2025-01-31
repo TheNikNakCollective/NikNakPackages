@@ -44,10 +44,10 @@ export class Server {
         app.use(express.urlencoded({ extended: true }))
         app.use(contextMiddleware)
 
-        app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, { }))
-        app.get("/swagger.json", (req, res) => {
-            res.json(swaggerDoc);
-          });
+        app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc, {}))
+        app.get('/swagger.json', (req, res) => {
+            res.json(swaggerDoc)
+        })
 
         RegisterRoutes(app)
 

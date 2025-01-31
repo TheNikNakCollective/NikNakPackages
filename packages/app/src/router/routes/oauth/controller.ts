@@ -83,7 +83,7 @@ export class OauthController extends Controller {
     @Get('/userinfo')
     @SuccessResponse(200, 'Get user info for authenticated user')
     public async userinfo(
-        @Request() req: RequestWithAppContext,
+        @Request() req: RequestWithAppContext
     ): Promise<UserInfo> {
         const agent = await getSessionAgent(req, req.context)
 

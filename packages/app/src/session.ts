@@ -4,10 +4,7 @@ import { AppContext } from '@app/context'
 
 export type Session = { did: string }
 
-export async function getSessionAgent(
-    req: IncomingMessage,
-    ctx: AppContext
-) {
+export async function getSessionAgent(req: IncomingMessage, ctx: AppContext) {
     const authorization = req.headers['authorization']
 
     if (!authorization || !authorization.startsWith('Bearer ')) {
