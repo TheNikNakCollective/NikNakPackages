@@ -5,6 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.0.12](https://github.com/TheNikNakCollective/NikNakPackages/compare/v0.0.11...v0.0.12) (2025-01-31)
 
-**Note:** Version bump only for package @niknak/id-resolver
-
-# Change Log
+**Note:** Version bump only for package @niknak/app-sdk
