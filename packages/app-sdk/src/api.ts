@@ -40,19 +40,6 @@ import {
 } from './base'
 
 /**
- *
- * @export
- * @interface Callback302Response
- */
-export interface Callback302Response {
-    /**
-     *
-     * @type {string}
-     * @memberof Callback302Response
-     */
-    Location: string
-}
-/**
  * The subject\'s followers whom you also follow
  * @export
  * @interface KnownFollowers

@@ -5,13 +5,14 @@ import {
     Route,
     SuccessResponse,
     Request,
-    Res,
-    TsoaResponse,
     Body,
 } from 'tsoa'
 import { RequestWithAppContext } from '@app/context'
 import { LoginBody, LoginURL, LogoutResponse, UserInfo } from './types'
 import { getSessionAgent } from '@app/session'
+import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
+import { Profile } from '@niknak/orm'
+import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
 
 @Route('oauth')
 export class OauthController extends Controller {
@@ -35,8 +36,7 @@ export class OauthController extends Controller {
     @Get('/callback')
     @SuccessResponse(302, 'Redirect')
     public async callback(
-        @Request() req: RequestWithAppContext,
-        @Res() redirect: TsoaResponse<302, { Location: string }>
+        @Request() req: RequestWithAppContext
     ): Promise<void> {
         const params = new URLSearchParams(req.originalUrl.split('?')[1])
         const redirectUri = `niknak://oauth/callback`
@@ -53,15 +53,19 @@ export class OauthController extends Controller {
                 success: 'true',
             })
 
-            return redirect(302, {
-                Location: `${redirectUri}?${tokenParams.toString()}`,
-            })
+            this.setHeader(
+                'Location',
+                `${redirectUri}?${tokenParams.toString()}`
+            )
+            this.setStatus(302)
         } catch (err) {
             req.context.logger.error({ err }, 'oauth callback failed')
 
-            return redirect(302, {
-                Location: `${redirectUri}?error=${encodeURIComponent((err as Error).message)}`,
-            })
+            this.setHeader(
+                'Location',
+                `${redirectUri}?error=${encodeURIComponent((err as Error).message)}`
+            )
+            this.setStatus(302)
         }
     }
 
@@ -85,7 +89,7 @@ export class OauthController extends Controller {
     @SuccessResponse(200, 'Get user info for authenticated user')
     public async userinfo(
         @Request() req: RequestWithAppContext
-    ): Promise<UserInfo> {
+    ): Promise<ProfileViewDetailed> {
         const agent = await getSessionAgent(req, req.context)
 
         const did = agent?.assertDid
@@ -93,6 +97,31 @@ export class OauthController extends Controller {
         if (!agent || !did) {
             throw new Error('User info not found.')
         } else {
+            const record = await agent.com.atproto.repo.getRecord({
+                rkey: 'self',
+                collection: 'app.bsky.actor.profile',
+                repo: did,
+            })
+
+            if (
+                ProfileLexicon.isRecord(record.data.value) &&
+                ProfileLexicon.validateRecord(record.data.value).success
+            ) {
+                const data: Profile = {
+                    ...record.data.value,
+                    uri: record.data.uri,
+                    did: did,
+                    avatar: record.data.value.avatar,
+                    banner: record.data.value.banner,
+                }
+
+                await req.context.db.profileRepository.save(data)
+            }
+
+            await req.context.db.profileRepository.findOneOrFail({
+                where: { uri: record.data.uri },
+            })
+
             const profile = await agent.getProfile({ actor: did })
 
             return profile.data

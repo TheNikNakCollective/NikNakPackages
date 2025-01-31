@@ -266,11 +266,6 @@ const models: TsoaRoute.Models = {
         additionalProperties: { dataType: 'any' },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    UserInfo: {
-        dataType: 'refAlias',
-        type: { ref: 'ProfileViewDetailed', validators: {} },
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 }
 const templateService = new ExpressTemplateService(models, {
     noImplicitAdditionalProperties: 'throw-on-extras',
@@ -341,15 +336,6 @@ export function RegisterRoutes(app: Router) {
         TsoaRoute.ParameterSchema
     > = {
         req: { in: 'request', name: 'req', required: true, dataType: 'object' },
-        redirect: {
-            in: 'res',
-            name: '302',
-            required: true,
-            dataType: 'nestedObjectLiteral',
-            nestedProperties: {
-                Location: { dataType: 'string', required: true },
-            },
-        },
     }
     app.get(
         '/oauth/callback',

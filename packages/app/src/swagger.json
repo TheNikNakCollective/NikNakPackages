@@ -445,9 +445,6 @@
 				],
 				"type": "object",
 				"additionalProperties": {}
-			},
-			"UserInfo": {
-				"$ref": "#/components/schemas/ProfileViewDetailed"
 			}
 		},
 		"securitySchemes": {}
@@ -492,22 +489,7 @@
 				"operationId": "Callback",
 				"responses": {
 					"302": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"Location": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"Location"
-									],
-									"type": "object"
-								}
-							}
-						}
+						"description": "Redirect"
 					}
 				},
 				"security": [],
@@ -542,7 +524,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserInfo"
+									"$ref": "#/components/schemas/ProfileViewDetailed"
 								}
 							}
 						}
