@@ -5,7 +5,7 @@
     "types": "./index.d.ts",
     "dependencies": {
         "@atproto/lexicon": "^0.4.5",
-        "@atproto/xrpc-server": "^0.7.6"
+        "@atproto/xrpc-server": "^0.7.9"
     },
     "devDependencies": {
         "@atproto/lex-cli": "^0.5.5",
