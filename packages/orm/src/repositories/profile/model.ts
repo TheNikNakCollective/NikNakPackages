@@ -1,9 +1,10 @@
 import { Record as ActorProfile } from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { TypedJsonBlobRef, BlobRef } from '@atproto/lexicon'
-import { Entity, Column, PrimaryColumn } from 'typeorm'
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
 import * as ComAtprotoLabelDefs from '@niknak/lexicon/lexicon/types/com/atproto/label/defs'
 import * as ComAtprotoRepoStrongRef from '@niknak/lexicon/lexicon/types/com/atproto/repo/strongRef'
 import { blobRefTransformer } from '../../transformers/blobRef'
+import { Post } from '../post'
 
 @Entity('profiles')
 export class Profile implements ActorProfile {
@@ -40,7 +41,10 @@ export class Profile implements ActorProfile {
     createdAt?: string
 
     @Column({ type: 'json', nullable: true })
-    additionalProperties?: { [key: string]: unknown };
+    additionalProperties?: { [key: string]: unknown }
+
+    @OneToMany(() => Post, (post) => post.did)
+    posts!: Post[];
 
     [x: string]: unknown
 }

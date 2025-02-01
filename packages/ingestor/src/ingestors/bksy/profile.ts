@@ -4,6 +4,9 @@ import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/pr
 import { Ingestor } from '../ingestor'
 import { NikNakDatabase, Profile } from '@niknak/orm'
 
+/**
+ * Ingests bluesky profiles into the database.
+ */
 export class ProfileIngestor implements Ingestor {
     protected logger = console
     protected firehose: Firehose
@@ -26,6 +29,7 @@ export class ProfileIngestor implements Ingestor {
                             did: evt.did,
                             avatar: record.avatar,
                             banner: record.banner,
+                            posts: [],
                         }
 
                         await db.profileRepository.save(data)
@@ -38,7 +42,10 @@ export class ProfileIngestor implements Ingestor {
                 }
             },
             onError: (err) => {
-                this.logger.error({ err }, 'error on firehose ingestion')
+                this.logger.error(
+                    { err },
+                    'error on profile firehose ingestion'
+                )
             },
             filterCollections: ['app.bsky.actor.profile'],
             excludeIdentity: true,

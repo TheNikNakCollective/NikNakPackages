@@ -8,7 +8,7 @@ import {
     Body,
 } from 'tsoa'
 import { RequestWithAppContext } from '@app/context'
-import { LoginBody, LoginURL, LogoutResponse, UserInfo } from './types'
+import { LoginBody, LoginURL, LogoutResponse } from './types'
 import { getSessionAgent } from '@app/session'
 import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { Profile } from '@niknak/orm'
@@ -113,6 +113,7 @@ export class OauthController extends Controller {
                     did: did,
                     avatar: record.data.value.avatar,
                     banner: record.data.value.banner,
+                    posts: [],
                 }
 
                 await req.context.db.profileRepository.save(data)
