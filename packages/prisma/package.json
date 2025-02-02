@@ -25,7 +25,12 @@
         "check-types": "tsc -P tsconfig.json --noEmit"
     },
     "files": [
-        "dist"
+        "prisma/schema.prisma",
+        "src/index.ts",
+        "src/prisma.ts",
+        "src/types.ts",
+        "tsconfig.json",
+        "tsconfig.build.json"
     ],
     "publishConfig": {
         "access": "public"

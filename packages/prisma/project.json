@@ -12,7 +12,8 @@
             "outputs": ["{projectRoot}/dist"],
             "cache": true,
             "dependsOn": [
-              { "projects": ["@niknak/lexicon"], "target": "build" }
+              { "projects": ["@niknak/lexicon"], "target": "build" },
+              { "projects": ["@niknak/prisma"], "target": "generate" }
             ]
         },
         "lex": {
