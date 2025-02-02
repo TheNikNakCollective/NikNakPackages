@@ -1,0 +1,33 @@
+{
+    "name": "@niknak/prisma",
+    "version": "0.0.16",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "dependencies": {
+        "@atproto/identity": "^0.4.5",
+        "@niknak/lexicon": "workspace:^",
+        "@prisma/client": "^6.3.0"
+    },
+    "devDependencies": {
+        "commander": "^13.1.0",
+        "dotenv": "^16.4.7",
+        "execa": "^5.0.0",
+        "prisma": "^6.3.0",
+        "prisma-json-types-generator": "^3.2.2",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.7.3"
+    },
+    "scripts": {
+        "generate": "prisma generate",
+        "migrate:dev:create": "ts-node ./scripts/migrate.ts dev:create",
+        "migrate:dev": "ts-node ./scripts/migrate.ts dev",
+        "build": "mkdir -p ./src/generated && rm -rf dist && mkdir -p ./dist/generated  && cp -r ./src/generated ./dist && tsc -P tsconfig.build.json",
+        "check-types": "tsc -P tsconfig.json --noEmit"
+    },
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    }
+}

@@ -1,0 +1,89 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AuthSession {
+  key     String @id
+  /// ![NodeSavedSession]
+  session Json
+}
+
+model AuthState {
+  key   String @id
+  /// ![NodeSavedState]
+  state Json
+}
+
+model Profile {
+  uri                  String    @id
+  did                  String
+  displayName          String?
+  description          String?
+  avatar               BlobRef?  @relation(name: "ProfileAvatarBlobRef", fields: [avatar_ref], references: [ref])
+  avatar_ref           String?
+  banner               BlobRef?  @relation(name: "ProfileBannerBlobRef", fields: [banner_ref], references: [ref])
+  banner_ref           String?
+  /// [ProfileLabels]
+  labels               Json?
+  /// [ComAtprotoRepoStrongRefMain]
+  joinedViaStarterPack Json?
+  /// [ComAtprotoRepoStrongRefMain]
+  pinnedPost           Json?
+  createdAt            DateTime?
+  additionalProperties Json?
+  posts                Post[]    @relation("UserPosts")
+}
+
+model Post {
+  uri       String   @id
+  text      String
+  did       String
+  tags      String[]
+  langs     String[]
+  /// [PostLabels]
+  labels    Json?
+  createdAt DateTime
+  owner_uri String
+  owner     Profile  @relation("UserPosts", fields: [owner_uri], references: [uri])
+  video     Video    @relation(name: "PostVideo", fields: [video_cid], references: [cid])
+  video_cid String   @unique
+}
+
+model Video {
+  cid       String    @id
+  video     BlobRef   @relation(name: "VideoBlobRef", fields: [video_ref], references: [ref])
+  video_ref String
+  captions  Caption[] @relation("VideoCaptions")
+  post      Post?     @relation(name: "PostVideo")
+}
+
+model Caption {
+  cid       String  @id
+  file      BlobRef @relation(name: "CaptionBlobRef", fields: [file_ref], references: [ref])
+  file_ref  String
+  lang      String
+  video     Video   @relation("VideoCaptions", fields: [video_ref], references: [cid])
+  video_ref String
+}
+
+model BlobRef {
+  ref      String @id
+  mimeType String
+  size     Int
+  original Json?
+
+  videos          Video[]   @relation(name: "VideoBlobRef")
+  profile_banners Profile[] @relation(name: "ProfileBannerBlobRef")
+  profile_avatars Profile[] @relation(name: "ProfileAvatarBlobRef")
+  captions        Caption[] @relation(name: "CaptionBlobRef")
+}

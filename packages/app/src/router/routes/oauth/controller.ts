@@ -11,8 +11,8 @@ import { RequestWithAppContext } from '@app/context'
 import { LoginBody, LoginURL, LogoutResponse } from './types'
 import { getSessionAgent } from '@app/session'
 import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
-import { Profile } from '@niknak/orm'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
+import { createBlobRef, Prisma } from '@niknak/prisma'
 
 @Route('oauth')
 export class OauthController extends Controller {
@@ -103,23 +103,47 @@ export class OauthController extends Controller {
                 repo: did,
             })
 
+            const { value } = record.data
+
             if (
-                ProfileLexicon.isRecord(record.data.value) &&
-                ProfileLexicon.validateRecord(record.data.value).success
+                ProfileLexicon.isRecord(value) &&
+                ProfileLexicon.validateRecord(value).success
             ) {
-                const data: Profile = {
-                    ...record.data.value,
+                const { avatar, banner, labels } = value
+                const data: Prisma.Prisma.ProfileCreateInput = {
+                    ...value,
                     uri: record.data.uri,
                     did: did,
-                    avatar: record.data.value.avatar,
-                    banner: record.data.value.banner,
-                    posts: [],
+                    avatar: avatar
+                        ? {
+                              connectOrCreate: {
+                                  where: {
+                                      ref: avatar.ref.toString(),
+                                  },
+                                  create: createBlobRef(avatar),
+                              },
+                          }
+                        : undefined,
+                    banner: banner
+                        ? {
+                              connectOrCreate: {
+                                  where: {
+                                      ref: banner.ref.toString(),
+                                  },
+                                  create: createBlobRef(banner),
+                              },
+                          }
+                        : undefined,
                 }
 
-                await req.context.db.profileRepository.save(data)
+                await req.context.db.profile.upsert({
+                    where: { uri: record.data.uri },
+                    create: data,
+                    update: data,
+                })
             }
 
-            await req.context.db.profileRepository.findOneOrFail({
+            await req.context.db.profile.findUnique({
                 where: { uri: record.data.uri },
             })
 

@@ -14,7 +14,7 @@
             "dependsOn": [
               { "projects": ["@niknak/id-resolver"], "target": "build" },
               { "projects": ["@niknak/lexicon"], "target": "build" },
-              { "projects": ["@niknak/orm"], "target": "build" }
+              { "projects": ["@niknak/prisma"], "target": "build" }
             ]
         },
         "lex": {

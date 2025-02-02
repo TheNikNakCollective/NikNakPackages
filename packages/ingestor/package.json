@@ -4,11 +4,12 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "dependencies": {
+        "@atproto/api": "^0.13.31",
         "@atproto/identity": "^0.4.5",
         "@atproto/sync": "^0.1.12",
         "@niknak/id-resolver": "workspace:^",
         "@niknak/lexicon": "workspace:^",
-        "@niknak/orm": "workspace:^",
+        "@niknak/prisma": "workspace:^",
         "ws": "^8.18.0"
     },
     "devDependencies": {

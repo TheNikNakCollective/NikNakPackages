@@ -10,7 +10,7 @@
         "@ipld/car": "3.2.4",
         "@niknak/id-resolver": "workspace:^",
         "@niknak/lexicon": "workspace:^",
-        "@niknak/orm": "workspace:^",
+        "@niknak/prisma": "workspace:^",
         "cookie": "0.7.2",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",

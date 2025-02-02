@@ -4,14 +4,13 @@ import {
     createBidirectionalResolver,
     createIdResolver,
 } from '@niknak/id-resolver'
-import express, { Response, Request } from 'express'
+import express from 'express'
 import { env } from './env'
 import { AppContext, createContextMiddleware } from './context'
 import { createClient } from './auth/client'
-import { NikNakDatabase } from '@niknak/orm'
 import { RegisterRoutes } from './routes'
 import swaggerUi from 'swagger-ui-express'
-import path from 'path'
+import prisma from '@niknak/prisma'
 
 export class Server {
     constructor(
@@ -20,7 +19,7 @@ export class Server {
         public ctx: AppContext
     ) {}
 
-    static async create(db: NikNakDatabase) {
+    static async create(db: typeof prisma) {
         const baseIdResolver = createIdResolver()
         const resolver = createBidirectionalResolver(baseIdResolver)
 
@@ -74,7 +73,7 @@ export class Server {
     }
 }
 
-export const run = async (db: NikNakDatabase) => {
+export const run = async (db: typeof prisma) => {
     console.log('Starting server...')
 
     const server = await Server.create(db)

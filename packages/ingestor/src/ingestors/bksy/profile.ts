@@ -2,7 +2,7 @@ import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
 import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { Ingestor } from '../ingestor'
-import { NikNakDatabase, Profile } from '@niknak/orm'
+import prisma, { Prisma, createBlobRef } from '@niknak/prisma'
 
 /**
  * Ingests bluesky profiles into the database.
@@ -11,7 +11,7 @@ export class ProfileIngestor implements Ingestor {
     protected logger = console
     protected firehose: Firehose
 
-    constructor(idResolver: IdResolver, db: NikNakDatabase) {
+    constructor(idResolver: IdResolver, db: typeof prisma) {
         this.firehose = new Firehose({
             idResolver,
             handleEvent: async (evt) => {
@@ -23,22 +23,49 @@ export class ProfileIngestor implements Ingestor {
                         ProfileLexicon.isRecord(record) &&
                         ProfileLexicon.validateRecord(record).success
                     ) {
-                        const data: Profile = {
+                        record.labels
+                        const data: Prisma.Prisma.ProfileCreateInput = {
                             ...record,
                             uri: evt.uri.toString(),
                             did: evt.did,
-                            avatar: record.avatar,
-                            banner: record.banner,
-                            posts: [],
+                            avatar: record.avatar
+                                ? {
+                                      connectOrCreate: {
+                                          where: {
+                                              ref: record.avatar.ref.toString(),
+                                          },
+                                          create: createBlobRef(record.avatar),
+                                      },
+                                  }
+                                : undefined,
+                            banner: record.banner
+                                ? {
+                                      connectOrCreate: {
+                                          where: {
+                                              ref: record.banner.ref.toString(),
+                                          },
+                                          create: createBlobRef(record.banner),
+                                      },
+                                  }
+                                : undefined,
+                            labels: JSON.parse(JSON.stringify(record.labels)),
                         }
 
-                        await db.profileRepository.save(data)
+                        await db.profile.upsert({
+                            where: { uri: evt.uri.toString() },
+                            update: data,
+                            create: data,
+                        })
                     }
                 } else if (
                     evt.event === 'delete' &&
                     evt.collection === 'app.bsky.actor.profile'
                 ) {
-                    await db.profileRepository.delete(evt.uri.toString())
+                    await db.profile.delete({
+                        where: {
+                            uri: evt.uri.toString(),
+                        },
+                    })
                 }
             },
             onError: (err) => {

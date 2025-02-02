@@ -1,10 +1,10 @@
 import { OAuthClient } from '@atproto/oauth-client-node'
 import { BidirectionalResolver } from '@niknak/id-resolver'
-import { NikNakDatabase } from '@niknak/orm'
+import prisma from '@niknak/prisma'
 import { NextFunction, Request, Response } from 'express'
 
 export interface AppContext {
-    db: NikNakDatabase
+    db: typeof prisma
     logger: Console
     oauthClient: OAuthClient
     resolver: BidirectionalResolver
