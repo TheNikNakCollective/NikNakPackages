@@ -1,6 +1,6 @@
 {
     "name": "@niknak/app",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "dependencies": {
         "@atproto/api": "^0.13.31",
         "@atproto/bsky": "^0.0.113",
