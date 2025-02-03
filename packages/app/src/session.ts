@@ -7,11 +7,11 @@ import { Prisma } from '@niknak/prisma'
 export type Session = { did: string }
 
 class NikNakAgent extends Agent {
-    profile: Prisma.Profile
+    profile: Prisma.Profile | null
 
     constructor(
         options: string | URL | SessionManager,
-        profile: Prisma.Profile
+        profile: Prisma.Profile | null
     ) {
         super(options)
 
@@ -35,7 +35,7 @@ export async function getSessionAgent(req: IncomingMessage, ctx: AppContext) {
         const oauthSession = await ctx.oauthClient.restore(token)
 
         if (oauthSession) {
-            const profile = await ctx.db.profile.findFirstOrThrow({
+            const profile = await ctx.db.profile.findFirst({
                 where: { did: token },
             })
 

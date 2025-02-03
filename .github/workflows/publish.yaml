@@ -54,7 +54,6 @@ jobs:
 
             - name: Version Package
               run: |
-                  git status
                   git fetch --all --tags
                   git pull --rebase
                   yarn nx run workspace:version

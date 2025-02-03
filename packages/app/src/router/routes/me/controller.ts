@@ -12,7 +12,7 @@ export class PostsController extends Controller {
     public async posts(@Request() req: RequestWithAppContext): Promise<Post[]> {
         const agent = await getSessionAgent(req, req.context)
 
-        if (!agent) throw new Error('Unauthenticated')
+        if (!agent || !agent.profile) throw new Error('Unauthenticated')
 
         const posts = await req.context.db.post.findMany({
             where: { owner_uri: agent.profile.uri },
