@@ -115,9 +115,16 @@ export class PostIngestor implements Ingestor {
                     evt.event === 'delete' &&
                     evt.collection === collection
                 ) {
-                    await db.post.delete({
+                    const post = await db.post.findFirst({
                         where: { uri: evt.uri.toString() },
                     })
+                    
+                    if (post) {
+                        await db.post.delete({
+                            where: { uri: evt.uri.toString() },
+                        })
+                    }
+                    
                 }
             },
             onError: (err) => {
@@ -152,9 +159,23 @@ export class PostIngestor implements Ingestor {
             ProfileLexicon.isRecord(value) &&
             ProfileLexicon.validateRecord(value).success
         ) {
-            const { avatar, banner } = value
+            const {
+                avatar,
+                banner,
+                createdAt,
+                description,
+                displayName,
+                joinedViaStarterPack,
+                pinnedPost,
+                ...rest
+            } = value
+
             const data: Prisma.Prisma.ProfileCreateInput = {
-                ...value,
+                displayName,
+                description,
+                createdAt,
+                joinedViaStarterPack,
+                pinnedPost,
                 uri: record.data.uri,
                 did: did,
                 avatar: avatar

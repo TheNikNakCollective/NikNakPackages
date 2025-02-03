@@ -451,10 +451,38 @@
 	},
 	"info": {
 		"title": "@niknak/app",
-		"version": "0.0.14",
+		"version": "0.0.17",
 		"contact": {}
 	},
 	"paths": {
+		"/posts/{uri}": {
+			"get": {
+				"operationId": "UserPosts",
+				"responses": {
+					"200": {
+						"description": "Fetch a users video posts",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uri",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/oauth/login": {
 			"post": {
 				"operationId": "Login",

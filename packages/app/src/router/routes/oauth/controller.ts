@@ -12,7 +12,8 @@ import { LoginBody, LoginURL, LogoutResponse } from './types'
 import { getSessionAgent } from '@app/session'
 import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import { ProfileViewDetailed } from '@atproto/api/dist/client/types/app/bsky/actor/defs'
-import { createBlobRef, Prisma } from '@niknak/prisma'
+import { upsertPost, upsertProfile } from '@niknak/prisma'
+import { isPost, isProfile } from '@app/utils/is'
 
 @Route('oauth')
 export class OauthController extends Controller {
@@ -105,49 +106,29 @@ export class OauthController extends Controller {
 
             const { value } = record.data
 
-            if (
-                ProfileLexicon.isRecord(value) &&
-                ProfileLexicon.validateRecord(value).success
-            ) {
-                const { avatar, banner, labels } = value
-                const data: Prisma.Prisma.ProfileCreateInput = {
-                    ...value,
-                    uri: record.data.uri,
-                    did: did,
-                    avatar: avatar
-                        ? {
-                              connectOrCreate: {
-                                  where: {
-                                      ref: avatar.ref.toString(),
-                                  },
-                                  create: createBlobRef(avatar),
-                              },
-                          }
-                        : undefined,
-                    banner: banner
-                        ? {
-                              connectOrCreate: {
-                                  where: {
-                                      ref: banner.ref.toString(),
-                                  },
-                                  create: createBlobRef(banner),
-                              },
-                          }
-                        : undefined,
-                }
-
-                await req.context.db.profile.upsert({
-                    where: { uri: record.data.uri },
-                    create: data,
-                    update: data,
-                })
+            if (isProfile(value)) {
+                await upsertProfile(record.data.uri, did, value)
             }
 
-            await req.context.db.profile.findUnique({
+            const user = await req.context.db.profile.findUniqueOrThrow({
                 where: { uri: record.data.uri },
             })
 
             const profile = await agent.getProfile({ actor: did })
+
+            console.log(user.did);
+
+            const response = await agent.com.atproto.repo.listRecords({
+                collection: 'app.bsky.feed.post',
+                repo: user.did,
+            })
+
+            await Promise.all(response.data.records.map(async (post) => {
+                        if (isPost(post.value)) {
+                            await upsertPost(user, post.uri, user.did, post.value);
+                        }
+                    }))
+            
 
             return profile.data
         }

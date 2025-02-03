@@ -5,6 +5,7 @@
     "types": "./dist/index.d.ts",
     "dependencies": {
         "@atproto/identity": "^0.4.5",
+        "@atproto/lexicon": "^0.4.5",
         "@niknak/lexicon": "workspace:^",
         "@prisma/client": "^6.3.0"
     },
