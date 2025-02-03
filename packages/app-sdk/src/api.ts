@@ -276,6 +276,25 @@ export interface Main {
 /**
  *
  * @export
+ * @interface Post
+ */
+export interface Post {
+    /**
+     *
+     * @type {string}
+     * @memberof Post
+     */
+    did: string
+    /**
+     *
+     * @type {string}
+     * @memberof Post
+     */
+    uri: string
+}
+/**
+ *
+ * @export
  * @interface ProfileAssociated
  */
 export interface ProfileAssociated {
@@ -789,20 +808,13 @@ export const DefaultApiAxiosParamCreator = function (
         },
         /**
          *
-         * @param {string} uri
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPosts: async (
-            uri: string,
+        posts: async (
             options: RawAxiosRequestConfig = {}
         ): Promise<RequestArgs> => {
-            // verify required parameter 'uri' is not null or undefined
-            assertParamExists('userPosts', 'uri', uri)
-            const localVarPath = `/posts/{uri}`.replace(
-                `{${'uri'}}`,
-                encodeURIComponent(String(uri))
-            )
+            const localVarPath = `/me/posts`
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL)
             let baseOptions
@@ -989,23 +1001,22 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {string} uri
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userPosts(
-            uri: string,
+        async posts(
             options?: RawAxiosRequestConfig
         ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>
+            (
+                axios?: AxiosInstance,
+                basePath?: string
+            ) => AxiosPromise<Array<Post>>
         > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userPosts(
-                uri,
-                options
-            )
+            const localVarAxiosArgs =
+                await localVarAxiosParamCreator.posts(options)
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0
             const localVarOperationServerBasePath =
-                operationServerMap['DefaultApi.userPosts']?.[
+                operationServerMap['DefaultApi.posts']?.[
                     localVarOperationServerIndex
                 ]?.url
             return (axios, basePath) =>
@@ -1104,16 +1115,12 @@ export const DefaultApiFactory = function (
         },
         /**
          *
-         * @param {string} uri
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userPosts(
-            uri: string,
-            options?: RawAxiosRequestConfig
-        ): AxiosPromise<string> {
+        posts(options?: RawAxiosRequestConfig): AxiosPromise<Array<Post>> {
             return localVarFp
-                .userPosts(uri, options)
+                .posts(options)
                 .then((request) => request(axios, basePath))
         },
         /**
@@ -1189,14 +1196,13 @@ export class DefaultApi extends BaseAPI {
 
     /**
      *
-     * @param {string} uri
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public userPosts(uri: string, options?: RawAxiosRequestConfig) {
+    public posts(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration)
-            .userPosts(uri, options)
+            .posts(options)
             .then((request) => request(this.axios, this.basePath))
     }
 
