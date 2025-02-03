@@ -445,6 +445,21 @@
 				],
 				"type": "object",
 				"additionalProperties": {}
+			},
+			"Post": {
+				"properties": {
+					"did": {
+						"type": "string"
+					},
+					"uri": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"did",
+					"uri"
+				],
+				"type": "object"
 			}
 		},
 		"securitySchemes": {}
@@ -455,34 +470,6 @@
 		"contact": {}
 	},
 	"paths": {
-		"/posts/{uri}": {
-			"get": {
-				"operationId": "UserPosts",
-				"responses": {
-					"200": {
-						"description": "Fetch a users video posts",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uri",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/oauth/login": {
 			"post": {
 				"operationId": "Login",
@@ -553,6 +540,28 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ProfileViewDetailed"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/me/posts": {
+			"get": {
+				"operationId": "Posts",
+				"responses": {
+					"200": {
+						"description": "Fetch a users video posts",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Post"
+									},
+									"type": "array"
 								}
 							}
 						}

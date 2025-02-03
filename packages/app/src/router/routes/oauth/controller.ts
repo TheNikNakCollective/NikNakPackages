@@ -116,19 +116,20 @@ export class OauthController extends Controller {
 
             const profile = await agent.getProfile({ actor: did })
 
-            console.log(user.did);
+            console.log(user.did)
 
             const response = await agent.com.atproto.repo.listRecords({
                 collection: 'app.bsky.feed.post',
                 repo: user.did,
             })
 
-            await Promise.all(response.data.records.map(async (post) => {
-                        if (isPost(post.value)) {
-                            await upsertPost(user, post.uri, user.did, post.value);
-                        }
-                    }))
-            
+            await Promise.all(
+                response.data.records.map(async (post) => {
+                    if (isPost(post.value)) {
+                        await upsertPost(user, post.uri, user.did, post.value)
+                    }
+                })
+            )
 
             return profile.data
         }

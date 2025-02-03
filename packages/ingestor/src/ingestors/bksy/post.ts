@@ -118,13 +118,12 @@ export class PostIngestor implements Ingestor {
                     const post = await db.post.findFirst({
                         where: { uri: evt.uri.toString() },
                     })
-                    
+
                     if (post) {
                         await db.post.delete({
                             where: { uri: evt.uri.toString() },
                         })
                     }
-                    
                 }
             },
             onError: (err) => {

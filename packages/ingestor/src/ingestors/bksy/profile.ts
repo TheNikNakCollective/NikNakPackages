@@ -23,7 +23,14 @@ export class ProfileIngestor implements Ingestor {
                         ProfileLexicon.isRecord(record) &&
                         ProfileLexicon.validateRecord(record).success
                     ) {
-                        const { createdAt, description, displayName, joinedViaStarterPack, pinnedPost, ...rest } = record;
+                        const {
+                            createdAt,
+                            description,
+                            displayName,
+                            joinedViaStarterPack,
+                            pinnedPost,
+                            ...rest
+                        } = record
 
                         const data: Prisma.Prisma.ProfileCreateInput = {
                             displayName,
@@ -53,7 +60,9 @@ export class ProfileIngestor implements Ingestor {
                                       },
                                   }
                                 : undefined,
-                            labels: record.labels ? JSON.parse(JSON.stringify(record.labels)) : undefined,
+                            labels: record.labels
+                                ? JSON.parse(JSON.stringify(record.labels))
+                                : undefined,
                         }
 
                         await db.profile.upsert({

@@ -1,7 +1,10 @@
 import * as PostLexicon from '@niknak/lexicon/lexicon/types/app/bsky/feed/post'
 import * as ProfileLexicon from '@niknak/lexicon/lexicon/types/app/bsky/actor/profile'
 import * as VideoLexicon from '@niknak/lexicon/lexicon/types/app/bsky/embed/video'
-import type { PostWithVideo } from '@app/router/routes/posts/types'
+
+export type PostWithVideo = Omit<PostLexicon.Record, 'embed'> & {
+    embed: VideoLexicon.Main
+}
 
 export function isProfile(value: any): value is ProfileLexicon.Record {
     if (
@@ -30,16 +33,15 @@ export function isPostWithVideo(value: any): value is PostWithVideo {
         PostLexicon.isRecord(value) &&
         PostLexicon.validateRecord(value).success
     ) {
-        const { embed } = value;
+        const { embed } = value
 
         if (
             VideoLexicon.isMain(embed) &&
             VideoLexicon.validateMain(embed).success
         ) {
-            return true;
+            return true
         }
     }
 
     return false
 }
-

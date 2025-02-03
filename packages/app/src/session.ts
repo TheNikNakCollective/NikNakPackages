@@ -1,8 +1,23 @@
 import { Agent } from '@atproto/api'
 import type { IncomingMessage } from 'node:http'
 import { AppContext } from '@app/context'
+import { SessionManager } from '@atproto/api/dist/session-manager'
+import { Prisma } from '@niknak/prisma'
 
 export type Session = { did: string }
+
+class NikNakAgent extends Agent {
+    profile: Prisma.Profile
+
+    constructor(
+        options: string | URL | SessionManager,
+        profile: Prisma.Profile
+    ) {
+        super(options)
+
+        this.profile = profile
+    }
+}
 
 export async function getSessionAgent(req: IncomingMessage, ctx: AppContext) {
     const authorization = req.headers['authorization']
@@ -19,7 +34,15 @@ export async function getSessionAgent(req: IncomingMessage, ctx: AppContext) {
     try {
         const oauthSession = await ctx.oauthClient.restore(token)
 
-        return oauthSession ? new Agent(oauthSession) : null
+        if (oauthSession) {
+            const profile = await ctx.db.profile.findFirstOrThrow({
+                where: { did: token },
+            })
+
+            return new NikNakAgent(oauthSession, profile)
+        }
+
+        return null
     } catch (err) {
         ctx.logger.warn({ err }, 'oauth restore failed')
 
