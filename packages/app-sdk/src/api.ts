@@ -40,6 +40,27 @@ import {
 } from './base'
 
 /**
+ * width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
+ * @export
+ * @interface AspectRatio
+ */
+export interface AspectRatio {
+    [key: string]: any
+
+    /**
+     *
+     * @type {number}
+     * @memberof AspectRatio
+     */
+    width: number
+    /**
+     *
+     * @type {number}
+     * @memberof AspectRatio
+     */
+    height: number
+}
+/**
  * The subject\'s followers whom you also follow
  * @export
  * @interface KnownFollowers
@@ -281,10 +302,52 @@ export interface Main {
 export interface Post {
     /**
      *
+     * @type {AspectRatio}
+     * @memberof Post
+     */
+    aspectRatio?: AspectRatio
+    /**
+     *
+     * @type {number}
+     * @memberof Post
+     */
+    quoteCount: number
+    /**
+     *
+     * @type {number}
+     * @memberof Post
+     */
+    likeCount: number
+    /**
+     *
+     * @type {number}
+     * @memberof Post
+     */
+    repostCount: number
+    /**
+     *
+     * @type {number}
+     * @memberof Post
+     */
+    replyCount: number
+    /**
+     *
      * @type {string}
      * @memberof Post
      */
-    did: string
+    thumbnail?: string
+    /**
+     *
+     * @type {string}
+     * @memberof Post
+     */
+    playlist: string
+    /**
+     *
+     * @type {string}
+     * @memberof Post
+     */
+    cid: string
     /**
      *
      * @type {string}

@@ -268,12 +268,28 @@ const models: TsoaRoute.Models = {
         additionalProperties: { dataType: 'any' },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    AspectRatio: {
+        dataType: 'refObject',
+        properties: {
+            width: { dataType: 'double', required: true },
+            height: { dataType: 'double', required: true },
+        },
+        additionalProperties: { dataType: 'any' },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     Post: {
         dataType: 'refAlias',
         type: {
             dataType: 'nestedObjectLiteral',
             nestedProperties: {
-                did: { dataType: 'string', required: true },
+                aspectRatio: { ref: 'AspectRatio' },
+                quoteCount: { dataType: 'double', required: true },
+                likeCount: { dataType: 'double', required: true },
+                repostCount: { dataType: 'double', required: true },
+                replyCount: { dataType: 'double', required: true },
+                thumbnail: { dataType: 'string' },
+                playlist: { dataType: 'string', required: true },
+                cid: { dataType: 'string', required: true },
                 uri: { dataType: 'string', required: true },
             },
             validators: {},

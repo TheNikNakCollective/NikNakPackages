@@ -1,7 +1,13 @@
-import * as PostLexicon from '@niknak/lexicon/lexicon/types/app/bsky/feed/post'
-import * as VideoLexicon from '@niknak/lexicon/lexicon/types/app/bsky/embed/video'
+import { AspectRatio } from '@niknak/lexicon/lexicon/types/app/bsky/embed/defs'
 
 export type Post = {
     uri: string
-    did: string
+    cid: string
+    playlist: string
+    thumbnail?: string
+    replyCount: number
+    repostCount: number
+    likeCount: number
+    quoteCount: number
+    aspectRatio?: AspectRatio
 }

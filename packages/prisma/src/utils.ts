@@ -61,7 +61,6 @@ export async function upsertProfile(
 export async function upsertPost(
     profile: Prisma.Profile,
     uri: string,
-    did: string,
     post: PostLexicon.Record
 ) {
     const { embed, text, labels, langs = [], createdAt } = post
@@ -76,7 +75,7 @@ export async function upsertPost(
             labels,
             langs,
             createdAt: new Date(createdAt),
-            did: did,
+            did: profile.did,
             owner: {
                 connect: {
                     uri: profile.uri,
@@ -117,12 +116,14 @@ export async function upsertPost(
             },
         }
 
+        console.log('data', data)
+
         const post = await prisma.post.upsert({
             where: {
                 uri: uri,
             },
             create: data,
-            update: data,
+            update: {},
         })
 
         return post

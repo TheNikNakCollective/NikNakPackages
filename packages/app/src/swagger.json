@@ -446,9 +446,53 @@
 				"type": "object",
 				"additionalProperties": {}
 			},
+			"AspectRatio": {
+				"description": "width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.",
+				"properties": {
+					"width": {
+						"type": "number",
+						"format": "double"
+					},
+					"height": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"width",
+					"height"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
 			"Post": {
 				"properties": {
-					"did": {
+					"aspectRatio": {
+						"$ref": "#/components/schemas/AspectRatio"
+					},
+					"quoteCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"likeCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"repostCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"replyCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"thumbnail": {
+						"type": "string"
+					},
+					"playlist": {
+						"type": "string"
+					},
+					"cid": {
 						"type": "string"
 					},
 					"uri": {
@@ -456,7 +500,12 @@
 					}
 				},
 				"required": [
-					"did",
+					"quoteCount",
+					"likeCount",
+					"repostCount",
+					"replyCount",
+					"playlist",
+					"cid",
 					"uri"
 				],
 				"type": "object"

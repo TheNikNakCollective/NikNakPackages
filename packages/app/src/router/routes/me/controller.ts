@@ -1,9 +1,9 @@
 import { RequestWithAppContext } from '@app/context'
 import { getSessionAgent } from '@app/session'
-import { Controller, Get, Path, Request, Route, SuccessResponse } from 'tsoa'
-import { isPostWithVideo } from '@app/utils/is'
+import { Controller, Get, Request, Route, SuccessResponse } from 'tsoa'
 import notEmpty from '@app/utils/notEmpty'
 import { Post } from './types'
+import * as AppBskyEmbedVideo from '@atproto/api/dist/client/types/app/bsky/embed/video'
 
 @Route('me')
 export class PostsController extends Controller {
@@ -25,21 +25,28 @@ export class PostsController extends Controller {
             uris: [...posts.map((post) => post.uri)],
         })
 
-        console.log(bskyPosts.data.posts)
+        const formattedPosts: Post[] = bskyPosts.data.posts
+            .map((post) => {
+                const { embed } = post
 
-        // const posts = (await Promise.all(user.posts.map(async (post) => {
-        //     const record = await agent.getPost({
-        //         rkey: 'self',
-        //         repo: user.did,
-        //     })
+                if (AppBskyEmbedVideo.isView(embed)) {
+                    return {
+                        uri: post.uri,
+                        cid: post.cid,
+                        playlist: embed.playlist,
+                        thumbnail: embed.thumbnail,
+                        aspectRatio: embed.aspectRatio,
+                        replyCount: post.replyCount ?? 0,
+                        repostCount: post.repostCount ?? 0,
+                        likeCount: post.likeCount ?? 0,
+                        quoteCount: post.quoteCount ?? 0,
+                    }
+                }
 
-        //     const { value } = record;
+                return null
+            })
+            .filter(notEmpty)
 
-        //     if (isPostWithVideo(value)) {
-        //         return value;
-        //     }
-        // }))).filter(notEmpty);
-
-        return []
+        return formattedPosts
     }
 }
